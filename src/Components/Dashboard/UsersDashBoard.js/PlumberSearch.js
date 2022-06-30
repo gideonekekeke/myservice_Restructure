@@ -12,6 +12,7 @@ import { GiComb } from "react-icons/gi";
 import { BiFridge } from "react-icons/bi";
 import { GiSpanner } from "react-icons/gi";
 import pic from "./img/3.png";
+import { Link } from "react-router-dom";
 const PlumberSearch = () => {
 	return (
 		<div class='page-wrapper dashboard'>
@@ -24,119 +25,135 @@ const PlumberSearch = () => {
 					<div>Plumbering Categories</div>
 					<div class='row'>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Toilets</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Toilets</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-										textAlign: "center",
-									}}
-									class='center'>
-									<h5>Basin & Sink</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+											textAlign: "center",
+										}}
+										class='center'>
+										<h5>Basin & Sink</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Pumps</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Pumps</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Tap & Mixer</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Tap & Mixer</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Bath Fitting</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Bath Fitting</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Drainage Pipes</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Drainage Pipes</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
-					
+
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-                                        textAlign : 'center'
-									}}
-									class='center'>
-									<h5>Water Pipe Connection</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+											textAlign: "center",
+										}}
+										class='center'>
+										<h5>Water Pipe Connection</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
-							<div class='ui-item'>
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-										width: "100%",
-									}}
-									class='center'>
-									<h5>Basin & Sink</h5>
+							<Link style={{ color: "black" }} to='/user-map'>
+								<div class='ui-item'>
+									<div
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+											width: "100%",
+										}}
+										class='center'>
+										<h5>Basin & Sink</h5>
+									</div>
 								</div>
-							</div>
+							</Link>
 						</div>
 					</div>
 				</div>

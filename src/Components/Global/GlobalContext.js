@@ -5,6 +5,8 @@ export const GlobalContext = createContext();
 
 export const AuthProvide = ({ children }) => {
 	const [current, setCurrent] = React.useState(null);
+	const [showResult, setShowResult] = React.useState([]);
+	const [showAllResult, setShowAllResult] = React.useState([]);
 
 	const user = useSelector((state) => state?.persistedReducer?.current);
 	React.useEffect(() => {
@@ -17,6 +19,10 @@ export const AuthProvide = ({ children }) => {
 		<GlobalContext.Provider
 			value={{
 				current,
+				showResult,
+				setShowResult,
+				showAllResult,
+				setShowAllResult,
 			}}>
 			{children}
 		</GlobalContext.Provider>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { GlobalContext } from "../Components/Global/GlobalContext";
+import { GlobalContext } from "../../Global/GlobalContext";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -9,17 +9,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import swal from "sweetalert";
 import axios from "axios";
-import Loading from "./LoadState";
+import Loading from "../../LoadState";
 import { DelayedRenderer } from "react-delayed-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { shootFriend } from "./Global/actions";
+import { shootFriend } from "../../Global/actions";
 import { ImCancelCircle } from "react-icons/im";
-const WorkersModal = () => {
+const BookingDetails = ({ changeDetail }) => {
+	const sendingTo = useSelector((state) => state.persistedReducer.sentTo);
 	const dispatch = useDispatch();
 	const hist = useNavigate();
-	const { showResult, current } = useContext(GlobalContext);
-
-	console.log("now now", showResult?.produ[0]);
+	const { current } = useContext(GlobalContext);
 
 	const [loading, setLoading] = React.useState(false);
 	const [bookTitle, setBookTitle] = React.useState("");
@@ -27,50 +26,50 @@ const WorkersModal = () => {
 	const [Desc, setDesc] = React.useState("");
 	const [price, setPrice] = React.useState("");
 	const [userId, setUserId] = React.useState("");
-	const [sendingTo, setSendingTo] = React.useState("");
+
 	const [allFriend, setAllFriend] = React.useState([]);
 	const toggleLoad = () => {
 		setLoading(true);
 	};
 
-	const PostService = async () => {
-		toggleLoad();
-		await axios
-			.post(`http://localhost:5000/api/book/${current._id}/booking`, {
-				bookTitle: `${showResult.produ[0].title}`,
-				Desc: `${showResult.produ[0].material}`,
-				price: `${showResult.produ[0].price}`,
-				userId: `${current._id}`,
-				sendingTo: `${showResult._id}`,
-			})
-			.then((response) => {
-				Swal.fire({
-					position: "center",
-					icon: "success",
-					title: "Booked Successfull",
+	// const PostService = async () => {
+	// 	toggleLoad();
+	// 	await axios
+	// 		.post(`http://localhost:5000/api/book/${current._id}/booking`, {
+	// 			bookTitle: `${showResult.produ[0].title}`,
+	// 			Desc: `${showResult.produ[0].material}`,
+	// 			price: `${showResult.produ[0].price}`,
+	// 			userId: `${current._id}`,
+	// 			sendingTo: `${showResult._id}`,
+	// 		})
+	// 		.then((response) => {
+	// 			Swal.fire({
+	// 				position: "center",
+	// 				icon: "success",
+	// 				title: "Booked Successfull",
 
-					timer: 2500,
-				}).then(() => {
-					window.location.reload(hist("/user-dashboard"));
-				});
+	// 				timer: 2500,
+	// 			}).then(() => {
+	// 				window.location.reload(hist("/user-dashboard"));
+	// 			});
 
-				setLoading(false);
-			})
-			.catch(() => {
-				Swal.fire({
-					position: "center",
-					icon: "error",
-					title: "An error occured",
-					showConfirmButton: false,
-					timer: 2500,
-				});
-				setLoading(false);
-			});
-	};
+	// 			setLoading(false);
+	// 		})
+	// 		.catch(() => {
+	// 			Swal.fire({
+	// 				position: "center",
+	// 				icon: "error",
+	// 				title: "An error occured",
+	// 				showConfirmButton: false,
+	// 				timer: 2500,
+	// 			});
+	// 			setLoading(false);
+	// 		});
+	// };
 
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/artician/${showResult._id}`)
+			.get(`http://localhost:5000/api/artician/${sendingTo}`)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -125,7 +124,7 @@ const WorkersModal = () => {
 	React.useEffect(() => {
 		fetchDetails();
 		getAllFriends();
-	}, []);
+	}, [sendingTo]);
 	return (
 		<div
 			style={{
@@ -139,89 +138,57 @@ const WorkersModal = () => {
 				zIndex: "1000",
 			}}
 			class='model'>
-			<DelayedRenderer delay={2000} onRender={() => console.log("rendered")}>
-				<Card id='login-modal'>
-					<UpHold>
-						<UserImage src={showResult.avatar} />
-						<MainHold>
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "space-between",
-									alignItems: "center",
-								}}>
-								{" "}
-								<h5>{showResult.name}</h5>
-								<div>
-									<ImCancelCircle
-										onClick={() => {
-											hist("/user-dashboard");
-										}}
-										style={{ fontSize: "20px", cursor: "pointer" }}
-									/>
-								</div>
+			<Card id='login-modal'>
+				<UpHold>
+					<UserImage src={data.avatar} />
+					<MainHold>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}>
+							{" "}
+							<h5>{data.name}</h5>
+							<div>
+								<ImCancelCircle
+									onClick={changeDetail}
+									style={{ fontSize: "20px", cursor: "pointer" }}
+								/>
 							</div>
-
-							<div style={{ color: "silver" }}>{showResult.profession}</div>
-							<p style={{ color: "black" }}>
-								In publishing and graphic design, Lorem ipsum is a placeholder
-								text commonly used to demonstrate the visual form of a document
-								or
-							</p>
-						</MainHold>
-					</UpHold>
-					<ButHold>
-						<div style={{ color: "silver" }}>Services Offered</div>
-
-						{allFriend.find(
-							(el) =>
-								el?.userFriend === current?._id &&
-								el?.addedID === showResult._id,
-						) ? (
-							<But1
-								onClick={() => {
-									hist("/allmessage");
-								}}>
-								Chat
-							</But1>
-						) : (
-							<But1 onClick={AddingFriend}>Chat</But1>
-						)}
-						<a href={`tel:${showResult.phoneNumber}`}>
-							<But>Call</But>
-						</a>
-					</ButHold>
-					{showResult?.produ[0] ? (
-						<div style={{ dispay: "flex" }}>
-							<h4 style={{ color: "black", fontWeight: "bold" }}>
-								{showResult?.produ[0].title}
-							</h4>
-							<div>{showResult?.produ[0].material}</div>
-							<div>#{showResult?.produ[0].price}</div>
-							<But2 onClick={PostService}>Book This Service</But2>
 						</div>
+						<div style={{ color: "silver" }}>{data.profession}</div>
+						<p style={{ color: "black" }}>
+							In publishing and graphic design, Lorem ipsum is a placeholder
+							text commonly used to demonstrate the visual form of a document or
+						</p>
+					</MainHold>
+				</UpHold>
+				<ButHold>
+					{allFriend.find(
+						(el) => el?.userFriend === current?._id && el?.addedID === data._id,
+					) ? (
+						<But1
+							onClick={() => {
+								hist("/allmessage");
+							}}>
+							Chat
+						</But1>
 					) : (
-						<But2 style={{ marginTop: "20px" }}>Book Service</But2>
+						<But1 onClick={AddingFriend}>Chat</But1>
 					)}
+					<a href={`tel:${data.phoneNumber}`}>
+						<But>Call</But>
+					</a>
+				</ButHold>
+			</Card>
 
-					<br />
-					<Link
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-						to='/view-more'>
-						View More
-					</Link>
-				</Card>
-			</DelayedRenderer>
 			{loading ? <Loading /> : null}
 		</div>
 	);
 };
 
-export default WorkersModal;
+export default BookingDetails;
 const But1 = styled.div`
 	height: 40px;
 	width: 120px;
@@ -243,6 +210,7 @@ const But2 = styled.div`
 	color: white;
 	border-radius: 10px;
 	cursor: pointer;
+	margin: 5px;
 `;
 const But = styled.div`
 	height: 40px;
@@ -253,10 +221,11 @@ const But = styled.div`
 	align-items: center;
 	color: white;
 	border-radius: 10px;
+	margin: 5px;
 `;
 const ButHold = styled.div`
 	display: flex;
-	justify-content: space-between;
+	// justify-content: space-between;
 
 	margin-top: 10px;
 	align-items: center;
@@ -268,6 +237,7 @@ const MainHold = styled.div`
 
 	p {
 		width: 250px;
+
 		@media screen and (max-width: 790px) {
 			font-size: 14px;
 			width: 100%;

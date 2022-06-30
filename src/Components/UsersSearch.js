@@ -1,4 +1,4 @@
-import React, {useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from "react";
 import {
 	Box,
 	Button,
@@ -20,12 +20,19 @@ import {
 	Autocomplete,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
-import WorkersModal from './WorkersModla';
-
-
+import WorkersModal from "./WorkersModla";
+import { GlobalContext } from "../Components/Global/GlobalContext";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const center = { lat: 48.8584, lng: 2.2945 };
 
 function UsersSearch() {
+	const { current, showResult, setShowResult } = useContext(GlobalContext);
+	const hist = useNavigate();
+	const data = useSelector((state) => state.persistedReducer.serchValue);
+	console.log("serchdata", data);
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: "AIzaSyBIe8lcH1rTX_sBfYeopfTGOjudCxQoPGo",
 		libraries: ["places"],
@@ -35,43 +42,43 @@ function UsersSearch() {
 	const [directionsResponse, setDirectionsResponse] = useState(null);
 	const [distance, setDistance] = useState("");
 	const [duration, setDuration] = useState("");
-	const [show, setShow] = React.useState(false)
-
-
-	const toggleShow = (e)=>{
-		setShow(true)
-		console.log('just clicked')
-	}
-	/** @type React.MutableRefObject<HTMLInputElement> */
-	const originRef = useRef();
-	/** @type React.MutableRefObject<HTMLInputElement> */
-	const destiantionRef = useRef();
-
-	if (!isLoaded) {
-		return `<div>Loading...</div>`
-	}
+	const [loading, setLoading] = useState(false);
+	const [show, setShow] = React.useState(false);
 
 	async function calculateRoute() {
-		if (originRef.current.value === "" || destiantionRef.current.value === "") {
+		if (originRef === "" || destiantionRef === "") {
 			return;
 		}
 		// eslint-disable-next-line no-undef
 		const directionsService = new google.maps.DirectionsService();
 		const results = await directionsService.route({
-			origin: originRef.current.value,
-			destination: destiantionRef.current.value,
+			origin: `${current?.location}`,
+			destination: `${showResult?.location}`,
 			// eslint-disable-next-line no-undef
 			travelMode: google.maps.TravelMode.DRIVING,
-		
-			
 		});
 		setDirectionsResponse(results);
 		setDistance(results.routes[0].legs[0].distance.text);
 		setDuration(results.routes[0].legs[0].duration.text);
-		toggleShow()
+		toggleShow();
 	}
 
+	React.useEffect(() => {
+		calculateRoute();
+	}, [calculateRoute]);
 
+	const toggleShow = (e) => {
+		setShow(true);
+		console.log("just clicked");
+	};
+	/** @type React.MutableRefObject<HTMLInputElement> */
+	const originRef = current;
+	/** @type React.MutableRefObject<HTMLInputElement> */
+	const destiantionRef = showResult;
+
+	if (!isLoaded) {
+		return `<div>Loading...</div>`;
+	}
 
 	function clearRoute() {
 		setDirectionsResponse(null);
@@ -80,9 +87,6 @@ function UsersSearch() {
 		originRef.current.value = "";
 		destiantionRef.current.value = "";
 	}
-
-	
-  
 
 	return (
 		<Flex
@@ -111,10 +115,9 @@ function UsersSearch() {
 				</GoogleMap>
 			</Box>
 			<Box
-			style={{
-				background : 'white',
-				width : "50%"
-			}}
+				style={{
+					background: "white",
+				}}
 				p={4}
 				borderRadius='lg'
 				m={4}
@@ -125,7 +128,11 @@ function UsersSearch() {
 				<HStack spacing={2} justifyContent='space-between'>
 					<Box flexGrow={1}>
 						<Autocomplete>
-							<Input type='text' placeholder='Origin' ref={originRef} />
+							<Input
+								type='text'
+								placeholder='Origin'
+								value={originRef?.location}
+							/>
 						</Autocomplete>
 					</Box>
 					<Box flexGrow={1}>
@@ -133,24 +140,12 @@ function UsersSearch() {
 							<Input
 								type='text'
 								placeholder='Destination'
-								ref={destiantionRef}
+								value={destiantionRef?.location}
 							/>
 						</Autocomplete>
 					</Box>
 
-					<ButtonGroup>
-						<Button
-							style={{ background: "#22218C", color: "white" }}
-							type='submit'
-							onClick={calculateRoute}>
-							Calculate Route
-						</Button>
-						<IconButton
-							aria-label='center back'
-							icon={<FaTimes />}
-							onClick={clearRoute}
-						/>
-					</ButtonGroup>
+					<ButtonGroup></ButtonGroup>
 				</HStack>
 				<HStack spacing={4} mt={4} justifyContent='space-between'>
 					<Text>Distance: {distance} </Text>
@@ -163,3 +158,12 @@ function UsersSearch() {
 }
 
 export default UsersSearch;
+
+// <IconButton aria-label='center back' icon={<FaTimes />} onClick={clearRoute} />;
+
+// <Button
+// 	style={{ background: "#22218C", color: "white" }}
+// 	type='submit'
+// 	onClick={calculateRoute}>
+// 	Calculate Route
+// </Button>

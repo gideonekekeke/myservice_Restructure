@@ -1,7 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "../../Global/actions";
 
 const UserSideBar = () => {
+	const hist = useNavigate();
+	const dispatch = useDispatch();
 	return (
 		<div style={{ background: "#22218C" }} class='user-sidebar'>
 			<div class='sidebar-inner'>
@@ -15,7 +19,7 @@ const UserSideBar = () => {
 						</li>
 					</Link>
 					<li style={{ color: "white" }}>
-						<a style={{ color: "white" }}>
+						<a href='/allmessage' style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-comment-o'></i>{" "}
 							Messages
@@ -28,7 +32,12 @@ const UserSideBar = () => {
 							Profile
 						</a>
 					</li>
-					<li style={{ color: "white" }}>
+					<li
+						onClick={() => {
+							dispatch(signOut());
+							window.location.reload(hist("/"));
+						}}
+						style={{ color: "white" }}>
 						<a style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-sign-out'></i> Logout

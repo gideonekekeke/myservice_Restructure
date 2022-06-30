@@ -1,43 +1,56 @@
-import React from 'react'
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "../../Global/actions";
 
 const ArtecianSideBar = () => {
-  return (
+	const dispatch = useDispatch();
+	const hist = useNavigate();
+	return (
 		<div style={{ background: "#22218C" }} class='user-sidebar'>
 			<div class='sidebar-inner'>
 				<ul style={{ color: "white" }} class='navigation'>
 					<li style={{ color: "white" }} class='active'>
-						<a style={{ color: "white" }}>
+						<a href='/artician-dashboard' style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-home'></i> Dashboard
 						</a>
 					</li>
+					<li>
+						<a href='/my-service' style={{ color: "white" }}>
+							<i style={{ color: "white" }} class='la la-file-invoice'></i>My
+							Services
+						</a>
+					</li>
 					<li style={{ color: "white" }}>
-						<a style={{ color: "white" }} >
+						<a href='/artemessage' style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-comment-o'></i>{" "}
 							Messages
 						</a>
 					</li>
-					<li style={{ color: "white" }} >
-						<a style={{ color: "white" }} >
+					<li style={{ color: "white" }}>
+						<a href='/artecian-profile' style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-user-tie'></i> My
 							Profile
 						</a>
 					</li>
-					<li style={{ color: "white" }} >
-						<a style={{ color: "white" }} >
+					<li style={{ color: "white" }}>
+						<a
+							onClick={() => {
+								dispatch(signOut());
+								window.location.reload(hist("/"));
+							}}
+							style={{ color: "white" }}>
 							{" "}
 							<i style={{ color: "white" }} class='la la-sign-out'></i> Logout
 						</a>
 					</li>
-				
 				</ul>
-
-				
 			</div>
 		</div>
 	);
-}
+};
 
-export default ArtecianSideBar
+export default ArtecianSideBar;

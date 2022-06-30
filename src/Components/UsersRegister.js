@@ -31,7 +31,7 @@ import { useDispatch } from "react-redux";
 import { user } from "./Global/actions";
 // import 'sweetalert2/src/sweetalert2.scss'
 const UserRegister = () => {
-	const dispach = useDispatch()
+	const dispach = useDispatch();
 	const hist = useNavigate();
 	const [toggle, setToggle] = React.useState(false);
 
@@ -40,12 +40,10 @@ const UserRegister = () => {
 	};
 
 	const [name, setName] = React.useState("");
-
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
 	const [location, setLocation] = React.useState("");
 	const [loading, setLoading] = React.useState(false);
-
 	const yupSchema = yup.object().shape({
 		name: yup.string().required("School name has to be filled"),
 		email: yup.string().required("full name has to be entered"),
@@ -85,19 +83,20 @@ const UserRegister = () => {
 					timer: 2500,
 				});
 				setLoading(false);
-				console.log(response)
-			   dispach(user(response?.data?.data))
-				hist("/")
-			}).catch((error)=>{
-					Swal.fire({
-						position: "center",
-						icon: "error",
-						title: "An error occurred",
-						showConfirmButton: false,
-						timer: 2500,
-					});
-					setLoading(false)
+				console.log(response);
+				dispach(user(response?.data?.data));
+				hist("/");
 			})
+			.catch((error) => {
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: "An error occurred",
+					showConfirmButton: false,
+					timer: 2500,
+				});
+				setLoading(false);
+			});
 	});
 
 	// const postData = async () => {

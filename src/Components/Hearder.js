@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Hearder = () => {
-  return (
+	return (
 		<header class='main-header header-style-two alternate2'>
 			<div class='auto-container'>
 				<div class='main-box'>
@@ -19,11 +19,11 @@ const Hearder = () => {
 									href='/'>
 									<img
 										style={{
-											height: "40px",
-											width: "40px",
-											objectFit: "contain",
+											height: "50px",
+											width: "120px",
+											objectFit: "cover",
 										}}
-										src='images/log3.png'
+										src='images/log4.png'
 										alt=''
 										title=''
 									/>{" "}
@@ -43,7 +43,7 @@ const Hearder = () => {
 								</li>
 
 								<li class='mm-add-listing'>
-									<a href='add-listing.html' class='theme-btn btn-style-one'>
+									<a href='/' class='theme-btn btn-style-one'>
 										Register as an Agent
 									</a>
 									<span>
@@ -122,6 +122,6 @@ const Hearder = () => {
 			<div id='nav-mobile'></div>
 		</header>
 	);
-}
+};
 
-export default Hearder
+export default Hearder;

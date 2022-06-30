@@ -8,72 +8,75 @@ import axios from "axios";
 import Loading from "./LoadState";
 import { useDispatch } from "react-redux";
 import { user } from "./Global/actions";
+import { useNavigate } from "react-router-dom";
 const UsersSignin = () => {
-		const dispach = useDispatch();
-		const yupSchema = yup.object().shape({
-			email: yup.string().required("full name has to be entered"),
-			password: yup.string().required("full name has to be entered"),
-		});
+	const dispach = useDispatch();
+	const hist = useNavigate();
+	const yupSchema = yup.object().shape({
+		email: yup.string().required("full name has to be entered"),
+		password: yup.string().required("full name has to be entered"),
+	});
 
-		const {
-			handleSubmit,
-			reset,
-			register,
-			formState: { errors },
-		} = useForm({ resolver: yupResolver(yupSchema) });
+	const {
+		handleSubmit,
+		reset,
+		register,
+		formState: { errors },
+	} = useForm({ resolver: yupResolver(yupSchema) });
 
-		const [location, setLocation] = React.useState("");
-		const [profession, setProfession] = React.useState("");
-		const [loading, setLoading] = React.useState(false);
+	const [location, setLocation] = React.useState("");
+	const [profession, setProfession] = React.useState("");
+	const [loading, setLoading] = React.useState(false);
 
-		const [toggle, setToggle] = React.useState(false);
+	const [toggle, setToggle] = React.useState(false);
 
-		const changeToggle = () => {
-			setToggle(!toggle);
-		};
+	const changeToggle = () => {
+		setToggle(!toggle);
+	};
 
-		const toggleLoad = () => {
-			setLoading(true);
-		};
+	const toggleLoad = () => {
+		setLoading(true);
+	};
 
-		const onSubmit = handleSubmit(async (val) => {
-			const { email, password } = val;
-			console.log(val);
-			const localURL = "http://localhost:2331";
-			const url = `http://localhost:5000/api/user/login`;
+	const onSubmit = handleSubmit(async (val) => {
+		const { email, password } = val;
+		console.log(val);
+		const localURL = "http://localhost:2331";
+		const url = `http://localhost:5000/api/user/login`;
 
-			toggleLoad();
-			await axios
-				.post(url, {
-					email,
-					password,
-				})
-				.then((response) => {
-					Swal.fire({
-						position: "center",
-						icon: "success",
-						title: response?.data?.message,
-						showConfirmButton: false,
-						timer: 2500,
-					});
-
-					console.log(response);
-
-					dispach(user(response?.data?.data));
-					setLoading(false);
-				})
-				.catch((error) => {
-					Swal.fire({
-						position: "center",
-						icon: "error",
-						title: error?.response?.data?.message,
-						showConfirmButton: false,
-						timer: 2500,
-					});
-					setLoading(false);
-					console.log(error);
+		toggleLoad();
+		await axios
+			.post(url, {
+				email,
+				password,
+			})
+			.then((response) => {
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: response?.data?.message,
+					showConfirmButton: false,
+					timer: 2500,
 				});
-		});
+
+				console.log(response);
+
+				dispach(user(response?.data?.data));
+				setLoading(false);
+				hist("/user-dashboard");
+			})
+			.catch((error) => {
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: error?.response?.data?.message,
+					showConfirmButton: false,
+					timer: 2500,
+				});
+				setLoading(false);
+				console.log(error);
+			});
+	});
 
 	return (
 		<div style={{ backgroundColor: "#f3f7fb", fontFamily: "raleway" }}>
@@ -137,11 +140,11 @@ const UsersSignin = () => {
 										justifyContent: "center",
 										alignItems: "center",
 									}}>
-									<a class='theme-btn btn-style-two'>
+									<a onClick={onSubmit} class='theme-btn btn-style-two'>
 										<span
 											style={{ color: "white", width: "500px" }}
 											class='btn-title'>
-											Create Account
+											LogIn
 										</span>
 									</a>
 								</div>
@@ -161,6 +164,8 @@ const UsersSignin = () => {
 									</span>
 								</div>
 							</form>
+
+							{loading ? <Loading /> : null}
 						</div>
 					</div>
 				</div>

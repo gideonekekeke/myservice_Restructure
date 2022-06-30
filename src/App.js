@@ -15,6 +15,16 @@ import VerificationPage from "./Components/VerificationPage";
 import AgentSigin from "./Components/AgentSignin";
 import ElectricianSearch from "./Components/Dashboard/UsersDashBoard.js/ElectricianSearch";
 import PlumberSearch from "./Components/Dashboard/UsersDashBoard.js/PlumberSearch";
+import CarpenterSearch from "./Components/Dashboard/UsersDashBoard.js/CarpenterSearch";
+import HairCutSearch from "./Components/Dashboard/UsersDashBoard.js/HairCutSearch";
+import AcRefrigeratorSearch from "./Components/Dashboard/UsersDashBoard.js/AcRefrigeratorSearch";
+import GeneratorSearch from "./Components/Dashboard/UsersDashBoard.js/GeneratorSearch";
+import MyServicePage from "./Components/Dashboard/ArticianDashboard/MyServicePage";
+import ViewMoreAtecians from "./Components/Dashboard/UsersDashBoard.js/ViewMoreAtecians";
+import Messages from "./Components/Messages";
+import ArtecianMessages from "./Components/Dashboard/ArticianDashboard/ArtecianMessages";
+import PainterSearch from "./Components/Dashboard/UsersDashBoard.js/PainterSearch";
+import UserProfile from "./Components/Dashboard/UsersDashBoard.js/UserProfile";
 function App() {
 	return (
 		<div>
@@ -37,6 +47,19 @@ function App() {
 					/>
 					<Route path='/electrician' element={<ElectricianSearch />} />
 					<Route path='/plumber' element={<PlumberSearch />} />
+					<Route path='/carpenter' element={<CarpenterSearch />} />
+					<Route path='/haircut' element={<HairCutSearch />} />
+					<Route path='/painter' element={<PainterSearch />} />
+					<Route path='/artecian-profile' element={<UserProfile />} />
+					<Route
+						path='/ac-refrigeratorsearch'
+						element={<AcRefrigeratorSearch />}
+					/>
+					<Route path='/generator-search' element={<GeneratorSearch />} />
+					<Route path='/my-service' element={<MyServicePage />} />
+					<Route path='/view-more' element={<ViewMoreAtecians />} />
+					<Route path='/allmessage' element={<Messages />} />
+					<Route path='/artemessage' element={<ArtecianMessages />} />
 				</Routes>
 			</Router>
 		</div>

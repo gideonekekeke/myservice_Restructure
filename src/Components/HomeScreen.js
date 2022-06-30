@@ -65,13 +65,20 @@ const HomeScreen = () => {
 										<label>Categories</label>
 										<span class='icon flaticon-briefcase'></span>
 										<select class='chosen-select'>
+										
 											<option value='Welder'>Welder</option>
 											<option value='Painter'>Painter</option>
+											<option value='Plumber'>Plumber</option>
 											<option value='Carpenter'>Carpenter</option>
 											<option value='Electrician'>Electrician</option>
 											<option value='Fashion Designer'>Fashion Designer</option>
 											<option value='Brick Layer'>Brick Layer</option>
 											<option value='Truck Pusher'>Truck Pusher</option>
+											<option value='Hair Cut'>Hair Cut</option>
+											<option value='Ac & Refrigerator'>
+												Ac & Refrigerator
+											</option>
+											<option value='Genrator & Car'>Genrator & Car</option>
 										</select>
 									</div>
 

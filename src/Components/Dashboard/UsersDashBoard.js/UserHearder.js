@@ -1,6 +1,7 @@
 import React from "react";
 
 const UserHeader = () => {
+    
 	return (
 		<header
 			style={{ background: "#22218C", color: "white" }}
@@ -26,7 +27,12 @@ const UserHeader = () => {
 								data-toggle='dropdown'
 								aria-expanded='false'>
 								<img
-									src='images/resource/company-6.png'
+
+                                style = {{
+                             
+                                    objectFit : "cover"
+                                }}
+									src='https://i.stack.imgur.com/l60Hf.png'
 									alt='avatar'
 									class='thumb'
 								/>

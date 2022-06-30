@@ -65,7 +65,7 @@ const SigninArtecian = () => {
 					timer: 2500,
 				});
 
-				console.log(response);
+				console.log("this is my response", response);
 
 				dispach(user(response?.data?.data));
 
@@ -208,7 +208,7 @@ const SigninArtecian = () => {
 								<span class='ml-auto'>
 									{" "}
 									Don't Have an Account?{" "}
-									<a href='/:id/register-artecian'>Register</a>
+									<a href='/register-artecian'>Register</a>
 								</span>
 							</div>
 						</div>

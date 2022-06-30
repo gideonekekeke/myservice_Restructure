@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const ArtecianHeader = () => {
-  return (
+	return (
 		<header
-			style={{ background: "#22218C", color : "white" }}
+			style={{ background: "#22218C", color: "white" }}
 			class='main-header header-shaddow'>
 			<div class='container-fluid'>
 				<div class='main-box'>
@@ -19,10 +19,6 @@ const ArtecianHeader = () => {
 					</div>
 
 					<div class='outer-box'>
-					
-
-					
-
 						<div class='dropdown dashboard-option'>
 							<a
 								class='dropdown-toggle'
@@ -72,6 +68,6 @@ const ArtecianHeader = () => {
 			<div id='nav-mobile'></div>
 		</header>
 	);
-}
+};
 
-export default ArtecianHeader
+export default ArtecianHeader;

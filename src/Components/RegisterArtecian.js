@@ -167,7 +167,6 @@ const RegisterArtecian = () => {
 													class='form-control'
 												/>
 											</div>
-										
 										</div>
 									</div>
 									<div class='col'>
@@ -190,8 +189,8 @@ const RegisterArtecian = () => {
 										<i class='mdi mdi-email-outline position-absolute'></i>
 										<select
 											required
-											onChange={(e)=>{
-												setProfession(e.target.value)
+											onChange={(e) => {
+												setProfession(e.target.value);
 											}}
 											style={{
 												background: "#F8FAFC",
@@ -205,11 +204,17 @@ const RegisterArtecian = () => {
 											<option disabled>select profession</option>
 											<option value='Welder'>Welder</option>
 											<option value='Painter'>Painter</option>
+											<option value='Plumber'>Plumber</option>
 											<option value='Carpenter'>Carpenter</option>
 											<option value='Electrician'>Electrician</option>
 											<option value='Fashion Designer'>Fashion Designer</option>
 											<option value='Brick Layer'>Brick Layer</option>
 											<option value='Truck Pusher'>Truck Pusher</option>
+											<option value='Hair Cut'>Hair Cut</option>
+											<option value='Ac & Refrigerator'>
+												Ac & Refrigerator
+											</option>
+											<option value='Genrator & Car'>Genrator & Car</option>
 										</select>
 									</div>
 								</div>
@@ -244,8 +249,6 @@ const RegisterArtecian = () => {
 												console.log("hdshhfjjdf", place?.formatted_address);
 												setLocation(place?.formatted_address);
 											}}
-											
-										
 										/>
 									</div>
 								</div>
