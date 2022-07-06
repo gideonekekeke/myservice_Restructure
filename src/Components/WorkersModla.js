@@ -13,7 +13,7 @@ import Loading from "./LoadState";
 import { DelayedRenderer } from "react-delayed-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { shootFriend } from "./Global/actions";
-import { ImCancelCircle } from "react-icons/im";
+import { ImCancelCircle, ImLocation } from "react-icons/im";
 const WorkersModal = () => {
 	const dispatch = useDispatch();
 	const hist = useNavigate();
@@ -36,19 +36,21 @@ const WorkersModal = () => {
 	const PostService = async () => {
 		toggleLoad();
 		await axios
-			.post(`http://localhost:5000/api/book/${current._id}/booking`, {
-				bookTitle: `${showResult.produ[0].title}`,
-				Desc: `${showResult.produ[0].material}`,
-				price: `${showResult.produ[0].price}`,
-				userId: `${current._id}`,
-				sendingTo: `${showResult._id}`,
-			})
+			.post(
+				`https://myserviceprojectapi.herokuapp.com/api/book/${current._id}/booking`,
+				{
+					bookTitle: `${showResult.produ[0].title}`,
+					Desc: `${showResult.produ[0].material}`,
+					price: `${showResult.produ[0].price}`,
+					userId: `${current._id}`,
+					sendingTo: `${showResult._id}`,
+				},
+			)
 			.then((response) => {
 				Swal.fire({
 					position: "center",
 					icon: "success",
 					title: "Booked Successfull",
-
 					timer: 2500,
 				}).then(() => {
 					window.location.reload(hist("/user-dashboard"));
@@ -70,7 +72,9 @@ const WorkersModal = () => {
 
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/artician/${showResult._id}`)
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${showResult._id}`,
+			)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -88,7 +92,7 @@ const WorkersModal = () => {
 	const AddingFriend = async () => {
 		const res = await axios
 			.post(
-				`http://localhost:5000/api/user/${current._id}/friend`,
+				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
 				captureDetails,
 			)
 			.then((response) => {
@@ -114,7 +118,7 @@ const WorkersModal = () => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/friends/all`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);
@@ -162,6 +166,11 @@ const WorkersModal = () => {
 								</div>
 							</div>
 
+							<h6 style={{ display: "flex" }}>
+								<ImLocation />
+								<div style={{ fontWeight: "bold" }}>{showResult.address}</div>
+							</h6>
+
 							<div style={{ color: "silver" }}>{showResult.profession}</div>
 							<p style={{ color: "black" }}>
 								In publishing and graphic design, Lorem ipsum is a placeholder
@@ -200,9 +209,7 @@ const WorkersModal = () => {
 							<div>#{showResult?.produ[0].price}</div>
 							<But2 onClick={PostService}>Book This Service</But2>
 						</div>
-					) : (
-						<But2 style={{ marginTop: "20px" }}>Book Service</But2>
-					)}
+					) : null}
 
 					<br />
 					<Link

@@ -7,14 +7,17 @@ import { GlobalContext } from "../../Global/GlobalContext";
 import ArtecianHeader from "./ArtecianHeader";
 import ArtecianSideBar from "./ArtecianSideBar";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 const ArticianDashBoard = () => {
 	const { current } = useContext(GlobalContext);
 	const [userData, setUserData] = React.useState([]);
 	const [load, setLoad] = React.useState(true);
+	const [data, setData] = React.useState([]);
+	const readUser = useSelector((state) => state.persistedReducer.current);
 
 	const getData = async () => {
 		await axios
-			.get("http://localhost:5000/api/book/bookings")
+			.get("https://myserviceprojectapi.herokuapp.com/api/book/bookings")
 			.then((response) => {
 				console.log(response?.data);
 				setUserData(response?.data);
@@ -22,20 +25,52 @@ const ArticianDashBoard = () => {
 			});
 	};
 
+	const gettingUser = async () => {
+		await axios
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${readUser._id}`,
+			)
+			.then((response) => {
+				setLoad(false);
+				console.log("main userdatahdfhdf", response.data.data);
+				setData(response.data.data);
+			});
+	};
+
+	const checkLength = userData?.map((props) => {
+		return props;
+		// console.log("maindata", data);
+	});
+
+	console.log("this is the currentlength", checkLength);
+
+	const lengthData = checkLength.filter((el) => {
+		return el?.sendingTo === current?._id;
+	});
+
+	const doneLength = checkLength.filter((el) => {
+		return el?.sendingTo === current?._id && el.done;
+	});
+	const CancelLength = checkLength.filter((el) => {
+		return el?.sendingTo === current?._id && el.cancel;
+	});
+
+	console.log("fgrdfgggggg", doneLength);
+
 	React.useEffect(() => {
 		getData();
-	}, []);
+		gettingUser();
+	}, [current, data]);
 	return (
 		<div class='page-wrapper dashboard'>
 			<ArtecianHeader />
 			<ArtecianSideBar />
-			<br />
-			<br />
+
 			<section class='user-dashboard'>
 				<div class='dashboard-outer'>
 					<div class='upper-title-box'>
-						<h3>Welcome, {current?.name}</h3>
-						<div class='text'>Artecian</div>
+						<h3>Welcome, {data?.name}</h3>
+						<div class='text'>Artisan</div>
 					</div>
 					<div class='row'>
 						<div class='col-xl-3 col-lg-6 col-md-6 col-sm-12'>
@@ -44,7 +79,7 @@ const ArticianDashBoard = () => {
 									<i class='icon flaticon-briefcase'></i>
 								</div>
 								<div class='right'>
-									<h4>0</h4>
+									<h4>{lengthData?.length}</h4>
 									<p>Booked</p>
 								</div>
 							</div>
@@ -55,7 +90,7 @@ const ArticianDashBoard = () => {
 									<i class='icon la la-file-invoice'></i>
 								</div>
 								<div class='right'>
-									<h4>0</h4>
+									<h4>{lengthData?.length}</h4>
 									<p>OnGoing</p>
 								</div>
 							</div>
@@ -66,7 +101,7 @@ const ArticianDashBoard = () => {
 									<i class='icon la la-comment-o'></i>
 								</div>
 								<div class='right'>
-									<h4>0</h4>
+									<h4>{doneLength?.length}</h4>
 									<p>Done</p>
 								</div>
 							</div>
@@ -77,7 +112,7 @@ const ArticianDashBoard = () => {
 									<i class='icon la la-bookmark-o'></i>
 								</div>
 								<div class='right'>
-									<h4>0</h4>
+									<h4>{CancelLength?.length}</h4>
 									<p>Canceled</p>
 								</div>
 							</div>
@@ -141,7 +176,7 @@ const ArticianDashBoard = () => {
 																								onClick={() => {
 																									axios
 																										.patch(
-																											`http://localhost:5000/api/book/statusUpdate/${props._id}
+																											`https://myserviceprojectapi.herokuapp.com/api/book/statusUpdate/${props._id}
                                                 `,
 																											{
 																												status: true,
@@ -198,7 +233,7 @@ const ArticianDashBoard = () => {
 																										onClick={() => {
 																											axios
 																												.patch(
-																													`http://localhost:5000/api/book/updatingDone/updated/${props._id}
+																													`https://myserviceprojectapi.herokuapp.com/api/book/updatingDone/updated/${props._id}
                                                 `,
 																													{
 																														done: true,
@@ -228,7 +263,7 @@ const ArticianDashBoard = () => {
 																										onClick={() => {
 																											axios
 																												.patch(
-																													`http://localhost:5000/api/book/cancelUpdate/${props._id}
+																													`https://myserviceprojectapi.herokuapp.com/api/book/cancelUpdate/${props._id}
                                                 `,
 																													{
 																														cancel: true,

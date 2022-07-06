@@ -13,7 +13,7 @@ import Loading from "../../LoadState";
 import { DelayedRenderer } from "react-delayed-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { shootFriend } from "../../Global/actions";
-import { ImCancelCircle } from "react-icons/im";
+import { ImCancelCircle, ImLocation } from "react-icons/im";
 const BookingDetails = ({ changeDetail }) => {
 	const sendingTo = useSelector((state) => state.persistedReducer.sentTo);
 	const dispatch = useDispatch();
@@ -69,7 +69,9 @@ const BookingDetails = ({ changeDetail }) => {
 
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/artician/${sendingTo}`)
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${sendingTo}`,
+			)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -87,7 +89,7 @@ const BookingDetails = ({ changeDetail }) => {
 	const AddingFriend = async () => {
 		const res = await axios
 			.post(
-				`http://localhost:5000/api/user/${current._id}/friend`,
+				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
 				captureDetails,
 			)
 			.then((response) => {
@@ -113,7 +115,7 @@ const BookingDetails = ({ changeDetail }) => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/friends/all`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);
@@ -157,6 +159,11 @@ const BookingDetails = ({ changeDetail }) => {
 								/>
 							</div>
 						</div>
+
+						<h6 style={{ display: "flex" }}>
+							<ImLocation />
+							<div style={{ fontWeight: "bold" }}>{data.address}</div>
+						</h6>
 						<div style={{ color: "silver" }}>{data.profession}</div>
 						<p style={{ color: "black" }}>
 							In publishing and graphic design, Lorem ipsum is a placeholder

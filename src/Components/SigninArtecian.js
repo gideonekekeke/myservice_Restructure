@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import "./regart.css";
+import { useSelector } from "react-redux";
 // import Swal from "sweetalert2";
 // import axios from "axios";
 // import Loading from "../LoadState";
@@ -16,8 +17,9 @@ import { user } from "./Global/actions";
 import { useNavigate } from "react-router-dom";
 // import 'sweetalert2/src/sweetalert2.scss'
 const SigninArtecian = () => {
+	const userData = useSelector((state) => state.persistedReducer.current);
 	const dispach = useDispatch();
-	const hist = useNavigate()
+	const hist = useNavigate();
 	const yupSchema = yup.object().shape({
 		email: yup.string().required("full name has to be entered"),
 		password: yup.string().required("full name has to be entered"),
@@ -48,7 +50,7 @@ const SigninArtecian = () => {
 		const { email, password } = val;
 		console.log(val);
 		const localURL = "http://localhost:2331";
-		const url = `http://localhost:5000/api/artician/login`;
+		const url = `https://myserviceprojectapi.herokuapp.com/api/artician/login`;
 
 		toggleLoad();
 		await axios
@@ -57,27 +59,43 @@ const SigninArtecian = () => {
 				password,
 			})
 			.then((response) => {
-				Swal.fire({
-					position: "center",
-					icon: "success",
-					title: response?.data?.message,
-					showConfirmButton: false,
-					timer: 2500,
-				});
-
-				console.log("this is my response", response);
-
 				dispach(user(response?.data?.data));
+				if (userData) {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: response?.data?.message,
+						showConfirmButton: false,
+						timer: 2500,
+					});
 
-				setLoading(false);
-				hist("/artician-dashboard");
-		
+					console.log("this is my response", response);
+
+					dispach(user(response?.data?.data));
+
+					setLoading(false);
+					window.location.reload();
+					hist("/artician-dashboard");
+				} else {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: response?.data?.message,
+						showConfirmButton: false,
+						timer: 2500,
+					}).then(() => {
+						console.log("this is my response", response);
+
+						setLoading(false);
+						hist("/");
+					});
+				}
 			})
 			.catch((error) => {
 				Swal.fire({
 					position: "center",
 					icon: "error",
-					title: error?.response?.data?.message,
+					title: error?.response?.message,
 					showConfirmButton: false,
 					timer: 2500,
 				});

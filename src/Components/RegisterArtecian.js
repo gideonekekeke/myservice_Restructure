@@ -15,20 +15,19 @@ import { useForm } from "react-hook-form";
 // import 'sweetalert2/src/sweetalert2.scss'
 
 const RegisterArtecian = () => {
-		const yupSchema = yup.object().shape({
-			name: yup.string().required("School name has to be filled"),
-			email: yup.string().required("full name has to be entered"),
-			password: yup.string().required("full name has to be entered"),
-			address: yup.string().required("email has to be filled"),
-		});
+	const yupSchema = yup.object().shape({
+		name: yup.string().required("School name has to be filled"),
+		email: yup.string().required("full name has to be entered"),
+		password: yup.string().required("full name has to be entered"),
+		address: yup.string().required("email has to be filled"),
+	});
 
-		const {
-			handleSubmit,
-			reset,
-			register,
-			formState: { errors },
-		} = useForm({ resolver: yupResolver(yupSchema) });
-
+	const {
+		handleSubmit,
+		reset,
+		register,
+		formState: { errors },
+	} = useForm({ resolver: yupResolver(yupSchema) });
 
 	const [location, setLocation] = React.useState("");
 	const [profession, setProfession] = React.useState("");
@@ -44,38 +43,36 @@ const RegisterArtecian = () => {
 		setLoading(true);
 	};
 
-		const onSubmit = handleSubmit(async (val) => {
-           
-			const {name, email, password, address} = val
-			console.log(val);
-			const localURL = "http://localhost:2331";
-			const url = `http://localhost:5000/api/artician/register`;
+	const onSubmit = handleSubmit(async (val) => {
+		const { name, email, password, address } = val;
+		console.log(val);
+		const localURL = "http://localhost:2331";
+		const url = `https://myserviceprojectapi.herokuapp.com/api/artician/register`;
 
-			toggleLoad()
-			await axios.post(url, {
-				name, 
+		toggleLoad();
+		await axios
+			.post(url, {
+				name,
 				email,
 				password,
 				address,
 				profession,
-				location
-			}).then((response)=>{
-	Swal.fire({
-		position: "center",
-		icon: "success",
-		title: "Please check your email for account verification",
-		showConfirmButton: false,
-		timer: 2500,
-	});
-
-	console.log(response)
-	setLoading(false)
-	reset()
+				location,
 			})
+			.then((response) => {
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: "Please check your email for account verification",
+					showConfirmButton: false,
+					timer: 2500,
+				});
 
-		
-		});
-
+				console.log(response);
+				setLoading(false);
+				reset();
+			});
+	});
 
 	// const postData = async () => {
 	// 	if (
@@ -266,7 +263,7 @@ const RegisterArtecian = () => {
 								</div>
 								<div class='form-group'>
 									<label class='mb-1'>
-										You agree to the Miver <a href='#'>User Agreement</a>,{" "}
+										You agree to the Myservice <a href='#'>User Agreement</a>,{" "}
 										<a href='#'>Privacy Policy</a>, and{" "}
 										<a href='#'>Cookie Policy</a>.
 									</label>

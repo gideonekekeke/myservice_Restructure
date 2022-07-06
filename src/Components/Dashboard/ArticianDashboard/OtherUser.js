@@ -13,7 +13,7 @@ const OtherUser = ({ dID, toggleShow, allUsers, myProp }) => {
 	const [data, setData] = React.useState([]);
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/${dID}`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${dID}`)
 
 			.then((response) => {
 				console.log("what the lord has done", response);

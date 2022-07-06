@@ -64,7 +64,7 @@ const UserRegister = () => {
 	const onSubmit = handleSubmit(async (val) => {
 		const { name, email, password } = val;
 		console.log(val);
-		const url = `http://localhost:5000/api/user/register`;
+		const url = `https://myserviceprojectapi.herokuapp.com/api/user/register`;
 
 		toggleLoad();
 		await axios

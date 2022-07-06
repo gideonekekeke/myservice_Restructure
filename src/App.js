@@ -25,26 +25,48 @@ import Messages from "./Components/Messages";
 import ArtecianMessages from "./Components/Dashboard/ArticianDashboard/ArtecianMessages";
 import PainterSearch from "./Components/Dashboard/UsersDashBoard.js/PainterSearch";
 import UserProfile from "./Components/Dashboard/UsersDashBoard.js/UserProfile";
+import { useSelector } from "react-redux";
+import PrivateRoute from "./Components/Global/PrivateRoute";
 function App() {
+	const user = useSelector((state) => state.persistedReducer.current);
 	return (
 		<div>
 			<Router>
 				<Routes>
-					<Route path='/' element={<HomeScreen />} />
-					<Route path='/agents' element={<SelectAgent />} />
-					<Route path='/register-artecian' element={<RegisterArtecian />} />
-					<Route path='/signin-artecian' element={<SigninArtecian />} />
-					<Route path='/user-map' element={<UsersSearch />} />
-					<Route path='/user-register' element={<UserRegister />} />
-					<Route path='/user-signin' element={<UsersSignin />} />
+					{!user ? (
+						<>
+							<Route path='/agents' element={<SelectAgent />} />
+							<Route path='/register-artecian' element={<RegisterArtecian />} />
+							<Route path='/signin-artecian' element={<SigninArtecian />} />
+
+							<Route path='/user-register' element={<UserRegister />} />
+							<Route path='/user-signin' element={<UsersSignin />} />
+
+							<Route path='/agent-login' element={<AgentSigin />} />
+
+							<Route
+								path='/api/artician/work/:id/:token'
+								element={<VerificationPage />}
+							/>
+						</>
+					) : (
+						<>
+							{" "}
+							<Route
+								path='/'
+								element={
+									<PrivateRoute>
+										<HomeScreen />
+									</PrivateRoute>
+								}
+							/>
+						</>
+					)}
+
 					<Route path='/user-dashboard' element={<UserHomeDash />} />
-					<Route path='/agent-login' element={<AgentSigin />} />
 					<Route path='/artician-dashboard' element={<ArticianDashBoard />} />
 					<Route path='/agent-dashboard' element={<AgentHomeDash />} />
-					<Route
-						path='/api/artician/work/:id/:token'
-						element={<VerificationPage />}
-					/>
+					<Route path='/user-map' element={<UsersSearch />} />
 					<Route path='/electrician' element={<ElectricianSearch />} />
 					<Route path='/plumber' element={<PlumberSearch />} />
 					<Route path='/carpenter' element={<CarpenterSearch />} />
@@ -60,6 +82,14 @@ function App() {
 					<Route path='/view-more' element={<ViewMoreAtecians />} />
 					<Route path='/allmessage' element={<Messages />} />
 					<Route path='/artemessage' element={<ArtecianMessages />} />
+					<Route
+						path='/'
+						element={
+							<PrivateRoute>
+								<HomeScreen />
+							</PrivateRoute>
+						}
+					/>
 				</Routes>
 			</Router>
 		</div>

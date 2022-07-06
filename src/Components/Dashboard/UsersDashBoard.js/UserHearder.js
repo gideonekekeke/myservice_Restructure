@@ -1,7 +1,14 @@
 import React from "react";
-
+import UserSideBar from "./UserSideBar";
+import UserSideBarToggle from "../UsersDashBoard.js/UserSideBarToggle";
+import { ImCancelCircle } from "react-icons/im";
 const UserHeader = () => {
-    
+	const [show, setShow] = React.useState(false);
+
+	const toggleShow = () => {
+		setShow(!show);
+	};
+
 	return (
 		<header
 			style={{ background: "#22218C", color: "white" }}
@@ -12,9 +19,17 @@ const UserHeader = () => {
 						<div class='logo-box'>
 							<div class='logo'>
 								<a href='/'>
-									<img src='' alt='' title='' />
+									<img
+										style={{
+											height: "40px",
+											width: "120px",
+											objectFit: "cover",
+										}}
+										src='images/le3.png'
+										alt=''
+										title=''
+									/>
 								</a>
-								logo
 							</div>
 						</div>
 					</div>
@@ -27,11 +42,9 @@ const UserHeader = () => {
 								data-toggle='dropdown'
 								aria-expanded='false'>
 								<img
-
-                                style = {{
-                             
-                                    objectFit : "cover"
-                                }}
+									style={{
+										objectFit: "cover",
+									}}
 									src='https://i.stack.imgur.com/l60Hf.png'
 									alt='avatar'
 									class='thumb'
@@ -44,34 +57,57 @@ const UserHeader = () => {
 
 			<div class='mobile-header'>
 				<div class='logo'>
-					<a href='index.html'>
-						<img src='images/logo.svg' alt='' title='' />
+					<a>
+						<img
+							style={{
+								height: "50px",
+								width: "120px",
+								objectFit: "cover",
+							}}
+							src='images/le3.png'
+							alt=''
+							title=''
+						/>
 					</a>
 				</div>
 
 				<div class='nav-outer clearfix'>
 					<div class='outer-box'>
-						<div class='login-box'>
-							<a href='login-popup.html' class='call-modal'>
-								<span class='icon-user'></span>
-							</a>
-						</div>
-
 						<button id='toggle-user-sidebar'>
 							<img
-								src='images/resource/company-6.png'
+								style={{
+									objectFit: "cover",
+								}}
+								src='https://i.stack.imgur.com/l60Hf.png'
 								alt='avatar'
 								class='thumb'
 							/>
 						</button>
-						<a href='#nav-mobile' class='mobile-nav-toggler navbar-trigger'>
-							<span class='flaticon-menu-1'></span>
-						</a>
+
+						{show ? (
+							<div
+								style={{
+									zIndex: "1000",
+									color: "white",
+									fontSize: "25px",
+									marginLeft: "70px",
+									cursor: "pointer",
+								}}>
+								<ImCancelCircle onClick={toggleShow} />
+							</div>
+						) : (
+							<a
+								onClick={toggleShow}
+								style={{ color: "white" }}
+								class='mobile-nav-toggler navbar-trigger'>
+								<span class='flaticon-menu-1'></span>
+							</a>
+						)}
 					</div>
 				</div>
 			</div>
 
-			<div id='nav-mobile'></div>
+			{show ? <UserSideBarToggle /> : null}
 		</header>
 	);
 };

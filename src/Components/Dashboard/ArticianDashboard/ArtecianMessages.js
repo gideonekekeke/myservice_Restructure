@@ -6,12 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalContext } from "../../Global/GlobalContext";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
 import OtherUser from "./OtherUser";
 import { useNavigate } from "react-router-dom";
 import { allUsers } from "../../Global/actions";
 import ArtecianHeader from "./ArtecianHeader";
 import ArtecianSideBar from "./ArtecianSideBar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
 const ArtecianMessages = () => {
 	const hist = useNavigate();
 	const { current } = useContext(GlobalContext);
@@ -39,10 +41,21 @@ const ArtecianMessages = () => {
 		setMessage("");
 	};
 
-	const url = "http://localhost:5000";
+	const yupSchema = yup.object().shape({
+		message: yup.string().required("filled is required"),
+	});
+
+	const {
+		handleSubmit,
+		reset,
+		register,
+		formState: { errors },
+	} = useForm({ resolver: yupResolver(yupSchema) });
+
+	const url = "https://myserviceprojectapi.herokuapp.com";
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/${current._id}`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}`)
 			.then((response) => {
 				// console.log("get the user", response);
 				setData(response?.data?.data);
@@ -51,7 +64,7 @@ const ArtecianMessages = () => {
 	};
 	const fetchAllUsers = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user`)
 
 			.then((response) => {
 				// console.log("get the many", response);
@@ -66,16 +79,14 @@ const ArtecianMessages = () => {
 		sendTo: readData?.addedID,
 		sendingUser: "ty4t",
 	};
-	const pastData2 = {
-		message: message,
-		sendTo: readData2?._id,
-		sendingUser: "dge",
-	};
 
 	const ChatMessage = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(`http://localhost:5000/${readData._id}/chat`, pastData)
+			.post(
+				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
+				pastData,
+			)
 
 			.then((response) => {
 				if (response.status === 201) {
@@ -87,20 +98,23 @@ const ArtecianMessages = () => {
 			});
 		setMessage(message);
 	};
-	const ChatMessage2 = async (e) => {
-		// e.preventDefault();
+	const ChatMessage2 = handleSubmit(async (val) => {
+		const { message } = val;
+		console.log(val);
+
 		await axios
-			.post(`http://localhost:5000/${readData._id}/chat`, pastData2)
+			.post(`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`, {
+				message: message,
+				sendTo: readData2?._id,
+				sendingUser: "dge",
+			})
 			.then((response) => {
-				if (response.status === 201) {
-					myFubc();
-				}
-				myFubc();
+				reset();
 				// window.location.reload();
 				// console.log("get users now", response);
 			});
-		setMessage(message);
-	};
+		reset();
+	});
 
 	const GettAllChat = async () => {
 		await axios
@@ -114,7 +128,9 @@ const ArtecianMessages = () => {
 	const getFriends = async () => {
 		if (readData) {
 			await axios
-				.get(`http://localhost:5000/api/user/${readData._id}/friending`)
+				.get(
+					`https://myserviceprojectapi.herokuapp.com/api/user/${readData._id}/friending`,
+				)
 
 				.then((response) => {
 					// console.log("AM GETTING FRIENDSr", response);
@@ -132,7 +148,7 @@ const ArtecianMessages = () => {
 	};
 	const getAllFriends = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/friends/all`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friends ooohhhhgfgfdhhjkj", response);
@@ -150,7 +166,7 @@ const ArtecianMessages = () => {
 
 		if (data?.sendTo === current?._id) {
 			toast.success(`you have one new message`, {
-				position: "top-right",
+				position: "center",
 				autoClose: false,
 				toastId: customId,
 				icon: "🚀",
@@ -169,6 +185,7 @@ const ArtecianMessages = () => {
 
 			// console.log("incoming message for you");
 		}
+		reset();
 		setChatH([...ChatH, data]);
 	});
 
@@ -182,9 +199,9 @@ const ArtecianMessages = () => {
 		fetchAllUsers();
 		getAllFriends();
 		GettAllChat();
-
+		reset();
 		// console.log("this is socked friend", allFriend);
-	}, [myId, readData, current]);
+	}, [myId, readData, current, reset]);
 	return (
 		<div class='page-wrapper dashboard'>
 			<ArtecianHeader />
@@ -196,7 +213,6 @@ const ArtecianMessages = () => {
 						style={{
 							display: "flex",
 							justifyContent: "center",
-
 							alignItems: "center",
 
 							width: "100%",
@@ -207,9 +223,7 @@ const ArtecianMessages = () => {
 							style={{
 								display: "flex",
 								justifyContent: "center",
-
 								alignItems: "center",
-
 								width: "100%",
 								height: "100%",
 							}}
@@ -225,25 +239,16 @@ const ArtecianMessages = () => {
 									height: "100%",
 								}}
 								class='row'>
-								<main class='col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12'>
+								<main style={{ width: "100%" }} class=''>
 									<div
 										style={{
 											display: 'justifyContent : "center',
 											alignItems: "center",
-											background: "red",
 											width: "100%",
 											height: "100%",
 										}}
 										class='box shadow-sm rounded bg-white mb-3 osahan-chat'>
 										<h5 class='pl-3 pt-3 pr-3 border-bottom mb-0 pb-3'>
-											<button
-												onClick={() => {
-													hist(-1);
-												}}
-												style={{ marginRight: "10px" }}
-												class='btn btn-outline-success'>
-												Cancel
-											</button>
 											Messaging
 										</h5>{" "}
 										<div class='row m-0'>
@@ -285,7 +290,7 @@ const ArtecianMessages = () => {
 																</div>
 															) : (
 																<div class='text-truncate'>
-																	{readData?.userName}
+																	{readData2?.name}
 																</div>
 															)}
 															<div class='small text-truncate overflow-hidden text-black-50'>
@@ -403,14 +408,13 @@ const ArtecianMessages = () => {
 														))}
 													</div>
 													<div class='w-100 border-top border-bottom'>
-														<textarea
+														<input
 															required
-															onChange={(e) => {
-																setMessage(e.target.value);
-															}}
+															{...register("message")}
 															placeholder='Write a message…'
 															class='form-control border-0 p-3 shadow-none'
-															rows='2'></textarea>
+															rows='2'
+														/>
 													</div>
 													<div
 														style={{
@@ -439,8 +443,7 @@ const ArtecianMessages = () => {
 																style={{ background: "#22218C" }}
 																onClick={() => {
 																	ChatMessage2();
-																	setMessage("");
-																	myFubc();
+																	reset();
 																}}
 																type='button'
 																class='btn btn-success btn-sm rounded'>

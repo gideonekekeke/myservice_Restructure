@@ -22,7 +22,9 @@ const MyServicePage = () => {
 	};
 	const getUserData = async () => {
 		await axios
-			.get(`http://localhost:5000/api/artician/${current._id}`)
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
+			)
 			.then((response) => {
 				setData(response?.data?.data);
 				setLoad(false);
@@ -49,11 +51,14 @@ const MyServicePage = () => {
 		console.log(errors);
 		toggleLoad();
 		await axios
-			.post(`http://localhost:5000/api/service/${current?._id}/create`, {
-				title,
-				material,
-				price,
-			})
+			.post(
+				`https://myserviceprojectapi.herokuapp.com/api/service/${current?._id}/create`,
+				{
+					title,
+					material,
+					price,
+				},
+			)
 			.then((response) => {
 				Swal.fire({
 					position: "center",
@@ -73,7 +78,6 @@ const MyServicePage = () => {
 					showConfirmButton: false,
 					timer: 2500,
 				});
-
 				setLoading(false);
 			});
 	});
@@ -85,8 +89,7 @@ const MyServicePage = () => {
 		<div class='page-wrapper dashboard'>
 			<ArtecianHeader />
 			<ArtecianSideBar />
-			<br />
-			<br />
+
 			<section class='user-dashboard'>
 				<div class='dashboard-outer'>
 					<div class='upper-title-box'>

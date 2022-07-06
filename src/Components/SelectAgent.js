@@ -8,10 +8,12 @@ const SelectAgent = () => {
 	const [data, setData] = React.useState([]);
 
 	const getAgents = async () => {
-		await axios.get("http://localhost:5000/api/agent").then((response) => {
-			console.log(response);
-			setData(response?.data?.data);
-		});
+		await axios
+			.get("https://myserviceprojectapi.herokuapp.com/api/agent")
+			.then((response) => {
+				console.log(response);
+				setData(response?.data?.data);
+			});
 	};
 
 	React.useEffect(() => {

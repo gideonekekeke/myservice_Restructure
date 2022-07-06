@@ -40,19 +40,19 @@ const Messages = () => {
 		setMessage("");
 	};
 
-	const url = "http://localhost:5000";
+	const url = "https://myserviceprojectapi.herokuapp.com";
 	const fetchDetails = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/${current._id}`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}`)
 			.then((response) => {
-				console.log("see what am getting ohhddd", response);
+				// console.log("see what am getting ohhddd", response);
 				setData(response?.data?.data);
 			});
 		setLoad(false);
 	};
 	const fetchAllUsers = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user`)
 
 			.then((response) => {
 				// console.log("get the many", response);
@@ -76,7 +76,10 @@ const Messages = () => {
 	const ChatMessage = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(`http://localhost:5000/${readData._id}/chat`, pastData)
+			.post(
+				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
+				pastData,
+			)
 
 			.then((response) => {
 				if (response.status === 201) {
@@ -91,7 +94,10 @@ const Messages = () => {
 	const ChatMessage2 = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(`http://localhost:5000/${readData._id}/chat`, pastData2)
+			.post(
+				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
+				pastData2,
+			)
 			.then((response) => {
 				if (response.status === 201) {
 					myFubc();
@@ -108,17 +114,19 @@ const Messages = () => {
 			.get(url)
 
 			.then((response) => {
-				// console.log("geting all canmessages", response);
+				console.log("geting all canmessages", response);
 				setChatH(response?.data);
 			});
 	};
 	const getFriends = async () => {
 		if (readData) {
 			await axios
-				.get(`http://localhost:5000/api/user/${readData._id}/friending`)
+				.get(
+					`https://myserviceprojectapi.herokuapp.com/api/user/${readData._id}/friending`,
+				)
 
 				.then((response) => {
-					// console.log("AM GETTING FRIENDSr", response);
+					// console.log("AM GETTING FRIENDSrfyfhyttyrt", response);
 
 					setDataFriend(response?.data?.data?.conversation);
 				});
@@ -133,7 +141,7 @@ const Messages = () => {
 	};
 	const getAllFriends = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/friends/all`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
 
 			.then((response) => {
 				// console.log("this are the friends oooojhbgvcvghjhgj", response?.data);
@@ -226,7 +234,7 @@ const Messages = () => {
 									height: "100%",
 								}}
 								class='row'>
-								<main class='col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12'>
+								<main class=''>
 									<div
 										style={{
 											display: 'justifyContent : "center',
@@ -237,14 +245,6 @@ const Messages = () => {
 										}}
 										class='box shadow-sm rounded bg-white mb-3 osahan-chat'>
 										<h5 class='pl-3 pt-3 pr-3 border-bottom mb-0 pb-3'>
-											<button
-												onClick={() => {
-													hist(-1);
-												}}
-												style={{ marginRight: "10px" }}
-												class='btn btn-outline-success'>
-												Cancel
-											</button>
 											Messaging
 										</h5>{" "}
 										<div class='row m-0'>

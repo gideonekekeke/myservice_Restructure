@@ -38,7 +38,7 @@ const ViewMoreAtecians = () => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/friends/all`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);
@@ -55,7 +55,6 @@ const ViewMoreAtecians = () => {
 			<UserHeader />
 			<UserSideBar />
 			<br />
-			<br />
 			<section class='user-dashboard'>
 				<div class='dashboard-outer'>
 					<h3 style={{ marginLeft: "10px" }}> All {articianName}s</h3>
@@ -63,16 +62,8 @@ const ViewMoreAtecians = () => {
 					{showAllResult?.map((props, i) => (
 						<Container>
 							<Holdeer>
-								<img
-									src={props.avatar}
-									style={{
-										height: "90px",
-										width: "90px",
-										borderRadius: "50px",
-										backgroundColor: "silver",
-										objectFit: "cover",
-									}}
-								/>
+								<UserImage src={props.avatar} />
+
 								<Hold>
 									<h5 style={{ fontWeight: "bold" }}>{props.name}</h5>
 									<h6
@@ -118,7 +109,7 @@ const ViewMoreAtecians = () => {
 													onClick={() => {
 														axios
 															.post(
-																`http://localhost:5000/api/user/${current._id}/friend`,
+																`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
 																{
 																	userName: props?.name,
 																	userImage: props?.avatar,
@@ -162,7 +153,7 @@ const ViewMoreAtecians = () => {
 											console.log("this is the id", props._id);
 
 											// axios.patch(
-											// 	`http://localhost:5000/api/artician/editshow/${props._id}`,
+											// 	`https://myserviceprojectapi.herokuapp.com/artician/editshow/${props._id}`,
 											// );
 										}}>
 										<div
@@ -171,7 +162,8 @@ const ViewMoreAtecians = () => {
 												cursor: "pointer",
 												borderBottom: "1px solid silver",
 											}}>
-											Services Offered for {props.name} <AiOutlineDown />
+											Services Offered for {props.name}
+											<AiOutlineDown />
 										</div>
 									</ButHold>
 
@@ -187,7 +179,7 @@ const ViewMoreAtecians = () => {
 															toggleLoad();
 															axios
 																.post(
-																	`http://localhost:5000/api/book/${current?._id}/booking`,
+																	`https://myserviceprojectapi.herokuapp.com/api/book/${current?._id}/booking`,
 																	{
 																		bookTitle: title,
 																		Desc: material,
@@ -242,12 +234,30 @@ const ViewMoreAtecians = () => {
 
 export default ViewMoreAtecians;
 
+const UserImage = styled.img`
+	height: 90px;
+	width: 90px;
+	border-radius: 50px;
+	background-color: silver;
+	object-fit: cover;
+`;
+
 const ServiceHold = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: "1px solid silver";
 	transition: all 350ms;
+
+	@media screen and (max-width: 600px) {
+		margin-left: -100px;
+		// background-color: red;
+		margin-top: 10px;
+		font-size: 10px;
+		overflow-x: scroll;
+		flex-direction: column;
+		align-items: flex-start;
+	}
 `;
 const MaterialHold = styled.div``;
 
@@ -297,6 +307,13 @@ const ButHold = styled.div`
 	margin-top: 10px;
 	align-items: center;
 	width: 100%;
+
+	@media screen and (max-width: 600px) {
+		width: 290px;
+		margin-left: -100px;
+		// background-color: red;
+		margin-top: 10px;
+	}
 `;
 
 const Hold = styled.div`
@@ -306,6 +323,16 @@ const Hold = styled.div`
 
 	p {
 		width: 500px;
+
+		@media screen and (max-width: 600px) {
+			width: 290px;
+			margin-left: -100px;
+			// background-color: red;
+			margin-top: 10px;
+		}
+
+		@media screen and (max-width: 600px) {
+		}
 	}
 `;
 

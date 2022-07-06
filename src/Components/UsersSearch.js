@@ -65,7 +65,7 @@ function UsersSearch() {
 
 	React.useEffect(() => {
 		calculateRoute();
-	}, [calculateRoute]);
+	}, [calculateRoute, showResult]);
 
 	const toggleShow = (e) => {
 		setShow(true);

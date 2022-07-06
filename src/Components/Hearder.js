@@ -23,7 +23,7 @@ const Hearder = () => {
 											width: "120px",
 											objectFit: "cover",
 										}}
-										src='images/log4.png'
+										src='images/le3.png'
 										alt=''
 										title=''
 									/>{" "}
@@ -89,7 +89,9 @@ const Hearder = () => {
 							</Link>
 							<Link to='/register-artecian'>
 								<a class='theme-btn btn-style-two'>
-									<span class='btn-title'>Register as an Artisian</span>
+									<span style={{ color: "white" }} class='btn-title'>
+										Register as an Artisian
+									</span>
 								</a>
 							</Link>
 						</div>
@@ -99,27 +101,45 @@ const Hearder = () => {
 
 			<div class='mobile-header'>
 				<div class='logo'>
-					<a href='index.html'>
-						<img src='images/logo.svg' alt='' title='' />
+					<a href='/'>
+						<img
+							style={{
+								height: "50px",
+								width: "100px",
+								objectFit: "cover",
+							}}
+							src='images/le3.png'
+							alt=''
+							title=''
+						/>
 					</a>
 				</div>
 
-				<div class='nav-outer clearfix'>
-					<div class='outer-box'>
-						<div class='login-box'>
-							<a href='login-popup.html' class='call-modal'>
-								<span class='icon-user'></span>
+				<div style={{ display: "flex" }}>
+					<div class='btn-box'>
+						<Link to='/user-register'>
+							<a
+								style={{ width: "47%", fontSize: "12px", height: "40px" }}
+								class='theme-btn btn-style-six call-modal'>
+								Login / Register
 							</a>
-						</div>
-
-						<a href='#nav-mobile' class='mobile-nav-toggler navbar-trigger'>
-							<span class='flaticon-menu-1'></span>
-						</a>
+						</Link>
+						<Link to='/register-artecian'>
+							<a
+								style={{
+									width: "50%",
+									fontSize: "10px",
+									height: "40px",
+									color: "white",
+									marginLeft: "5px",
+								}}
+								class='theme-btn btn-style-two'>
+								<span class='btn-title'>Register as an Artisian</span>
+							</a>
+						</Link>
 					</div>
 				</div>
 			</div>
-
-			<div id='nav-mobile'></div>
 		</header>
 	);
 };

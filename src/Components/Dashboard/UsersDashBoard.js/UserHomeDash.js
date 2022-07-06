@@ -28,6 +28,7 @@ const UserHomeDash = () => {
 		useContext(GlobalContext);
 	const hist = useNavigate();
 	const dataValue = useSelector((state) => state.persistedReducer.serchValue);
+	const readUser = useSelector((state) => state.persistedReducer.current);
 	const [data, setData] = React.useState([]);
 	const [load, setLoad] = React.useState(true);
 	const [loading, setLoading] = React.useState(false);
@@ -41,15 +42,17 @@ const UserHomeDash = () => {
 	const dispatch = useDispatch();
 
 	const getData = async () => {
-		await axios.get("http://localhost:5000/api/artician").then((response) => {
-			console.log(response.data.data);
-			setData(response.data.data);
-		});
+		await axios
+			.get("https://myserviceprojectapi.herokuapp.com/api/artician")
+			.then((response) => {
+				console.log(response.data.data);
+				setData(response.data.data);
+			});
 	};
 
 	const gettingUser = async () => {
 		await axios
-			.get(`http://localhost:5000/api/user/${current._id}`)
+			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${readUser._id}`)
 			.then((response) => {
 				setLoad(false);
 				console.log("main userdatahdfhdf", response.data.data);
@@ -57,37 +60,31 @@ const UserHomeDash = () => {
 			});
 	};
 
+	const toggleLoad = () => {
+		setLoading(true);
+	};
+
 	React.useEffect(() => {
 		getData();
 		gettingUser();
-	}, [current?._id]);
+	}, [current]);
 
 	const submit = async () => {
 		try {
 			await axios
 				.get(
-					`http://localhost:5000/api/artician/quering/query?search=${dataValue}`,
+					`https://myserviceprojectapi.herokuapp.com/api/artician/quering/query?search=${dataValue}`,
 				)
 				.then((result) => {
-					// console.log("this is the datadfgyhjyt", result.data[0]);
-					if (!result?.data[0]) {
-						Swal.fire({
-							icon: "error",
-							title: "No Artecian Yet for this Service",
+					console.log("this is the datadfgyhjyt", result.data[0]);
 
-							// footer: '<a href="">Why do I have this issue?</a>'
-						}).then(() => {
-							setLoading(false);
-							hist("/user-dashboard");
-						});
-						return;
-						setLoading(false);
-					}
+					setLoading(false);
 
 					setShowAllResult(result.data);
+
 					setShowResult(
 						result.data[
-							Math.round(
+							Math.floor(
 								(Math.random() * result.data.length) % result.data.length,
 							)
 						],
@@ -95,14 +92,14 @@ const UserHomeDash = () => {
 					console.log(
 						"getting something",
 						result.data[
-							Math.round(
+							Math.floor(
 								(Math.random() * result.data.length) % result.data.length,
 							)
 						],
 					);
 					console.log(
 						"counts",
-						Math.round(
+						Math.floor(
 							(Math.random() * result.data.length) % result.data.length,
 						),
 					);
@@ -123,6 +120,8 @@ const UserHomeDash = () => {
 		}
 	};
 
+	React.useEffect(() => {}, [dataValue, showResult]);
+
 	return (
 		<>
 			<div>
@@ -133,12 +132,10 @@ const UserHomeDash = () => {
 				<UserHeader />
 
 				<UserSideBar />
-				<br />
-				<br />
 				<section class='user-dashboard'>
 					<div class='dashboard-outer'>
 						<div class='upper-title-box'>
-							<h3>Welcome, {current?.name}</h3>
+							<h3>Welcome, {userData?.name}</h3>
 							<div class='text'>Client</div>
 						</div>
 						<div>Service Categories</div>

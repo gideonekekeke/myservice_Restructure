@@ -8,7 +8,7 @@ const VerificationPage = () => {
 	const { id, token } = useParams();
 
 	const onSubmit = async () => {
-		const main = "http://localhost:5000";
+		const main = "https://myserviceprojectapi.herokuapp.com";
 		const online = "https://qlinkappi.herokuapp.com";
 
 		const url = `${main}/api/artician/work/${id}/${token}`;
@@ -16,12 +16,11 @@ const VerificationPage = () => {
 		const res = await axios.get(url).then((res) => {
 			if (res) {
 				console.log("seudfjdjdjdjdjdj", res);
-			    	hist("/signin-artecian");
+				hist("/signin-artecian");
 				window.location.reload();
 			}
 		});
 
-	
 		// window.location.reload()
 	};
 

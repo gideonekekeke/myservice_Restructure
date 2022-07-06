@@ -42,7 +42,7 @@ const UsersSignin = () => {
 		const { email, password } = val;
 		console.log(val);
 		const localURL = "http://localhost:2331";
-		const url = `http://localhost:5000/api/user/login`;
+		const url = `https://myserviceprojectapi.herokuapp.com/api/user/login`;
 
 		toggleLoad();
 		await axios
@@ -80,6 +80,7 @@ const UsersSignin = () => {
 
 	return (
 		<div style={{ backgroundColor: "#f3f7fb", fontFamily: "raleway" }}>
+			{loading ? <Loading /> : null}
 			<div class='container'>
 				<div class='row justify-content-center align-items-center d-flex vh-100'>
 					<div
@@ -164,8 +165,6 @@ const UsersSignin = () => {
 									</span>
 								</div>
 							</form>
-
-							{loading ? <Loading /> : null}
 						</div>
 					</div>
 				</div>

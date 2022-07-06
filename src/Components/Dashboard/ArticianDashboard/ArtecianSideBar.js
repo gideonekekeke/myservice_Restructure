@@ -40,7 +40,7 @@ const ArtecianSideBar = () => {
 						<a
 							onClick={() => {
 								dispatch(signOut());
-								window.location.reload(hist("/"));
+								hist("/");
 							}}
 							style={{ color: "white" }}>
 							{" "}

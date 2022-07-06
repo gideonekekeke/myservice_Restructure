@@ -51,7 +51,7 @@ const AcRefrigeratorSearch = () => {
 										justifyContent: "center",
 										alignItems: "center",
 										width: "100%",
-                                        textAlign : 'center'
+										textAlign: "center",
 									}}
 									class='center'>
 									<h5>AC Installation / Unistallation</h5>
@@ -86,7 +86,6 @@ const AcRefrigeratorSearch = () => {
 								</div>
 							</div>
 						</div>
-					
 					</div>
 				</div>
 			</section>

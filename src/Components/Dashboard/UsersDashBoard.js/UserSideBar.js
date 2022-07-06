@@ -25,13 +25,7 @@ const UserSideBar = () => {
 							Messages
 						</a>
 					</li>
-					<li style={{ color: "white" }}>
-						<a style={{ color: "white" }}>
-							{" "}
-							<i style={{ color: "white" }} class='la la-user-tie'></i> My
-							Profile
-						</a>
-					</li>
+
 					<li
 						onClick={() => {
 							dispatch(signOut());
