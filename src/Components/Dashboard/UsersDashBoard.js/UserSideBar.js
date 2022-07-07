@@ -29,7 +29,7 @@ const UserSideBar = () => {
 					<li
 						onClick={() => {
 							dispatch(signOut());
-							window.location.reload(hist("/"));
+							hist("/");
 						}}
 						style={{ color: "white" }}>
 						<a style={{ color: "white" }}>

@@ -9,14 +9,14 @@
 @media only screen and (max-width: 790px) {
 	.default-form {
 		display: flex;
-		margin-left: -70px;
+		margin-left: 3px;
 	}
 }
 
 @media only screen and (max-width: 420px) {
 	.default-form {
 		display: flex;
-		margin-left: -105px;
+		margin-left: 3px;
 	}
 }
 

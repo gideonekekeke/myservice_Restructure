@@ -8,6 +8,7 @@ import Loading from "../../LoadState";
 import { GlobalContext } from "../../Global/GlobalContext";
 import ArtecianHeader from "../ArticianDashboard/ArtecianHeader";
 import ArtecianSideBar from "../ArticianDashboard/ArtecianSideBar";
+
 const UserProfile = () => {
 	const { current } = useContext(GlobalContext);
 	const hist = useNavigate();
@@ -276,7 +277,6 @@ const UserProfile = () => {
 															}}
 															type='text'
 															value={data.profession}
-															defaultValue={data?.profession}
 															name='name'
 															placeholder='UI Designer'
 														/>
@@ -328,7 +328,7 @@ const UserProfile = () => {
 																setLocation(e.target.value);
 															}}
 															type='text'
-															defaultValue={data?.location}
+															value={data?.location}
 															name='name'
 															placeholder='Certificate'
 														/>

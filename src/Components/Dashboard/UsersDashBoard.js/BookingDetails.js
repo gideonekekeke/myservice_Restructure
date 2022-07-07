@@ -166,8 +166,8 @@ const BookingDetails = ({ changeDetail }) => {
 						</h6>
 						<div style={{ color: "silver" }}>{data.profession}</div>
 						<p style={{ color: "black" }}>
-							In publishing and graphic design, Lorem ipsum is a placeholder
-							text commonly used to demonstrate the visual form of a document or
+							I use My technical skills and problem-solving abilities to resolve
+							general household maintenance problems.
 						</p>
 					</MainHold>
 				</UpHold>

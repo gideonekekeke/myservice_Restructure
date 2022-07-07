@@ -41,8 +41,8 @@ const HomeScreen = () => {
 			},
 			{
 				target: ".btn-box",
-				content: `if you are a user user looking for an artecian click on the Login/ signup Button...
-				if you are an artecian click on the yellow button
+				content: `if you are a user looking for an artisan click on the Login/ signup Button...
+				if you are an artisan click on the yellow button
 				`,
 			},
 		],
@@ -52,7 +52,6 @@ const HomeScreen = () => {
 
 	const handleJoyrideCallback = (data) => {
 		const { action, index, status, type } = data;
-
 		if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
 			// Update state to advance the tour
 			setStepping({
@@ -67,7 +66,6 @@ const HomeScreen = () => {
 		console.log(data); //eslint-disable-line no-console
 		console.groupEnd();
 	};
-
 	const { run, stepIndex, steps } = stepping;
 
 	React.useEffect(() => {
@@ -95,7 +93,6 @@ const HomeScreen = () => {
 				styles={{
 					options: {
 						primaryColor: "#000",
-
 						width: 500,
 						zIndex: 1000,
 					},
@@ -227,11 +224,11 @@ const HomeScreen = () => {
 					<div class='row grid-base justify-content-center'>
 						<div class='col-lg-6 col-md-10'>
 							<div class='sec-title light text-center'>
-								<h2>Make Recruiting Your Competitive Advantage</h2>
+								<h2>FIND A PROFESSIONAL & BOOK A SERVICE</h2>
 								<div class='text'>
-									Superio offers a way to completely optimize your entire
-									recruiting process. Find better candidates, conduct more
-									focused interviews, and make data-driven hiring decisions.
+									Enter the service you require in the search box, fill in the
+									necessary details, choose the profession you require for what
+									you want to do, and book service, chat, or call.
 								</div>
 							</div>
 

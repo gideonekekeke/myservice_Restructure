@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 import { allUsers } from "./Global/actions";
 import UserHeader from "./Dashboard/UsersDashBoard.js/UserHearder";
@@ -110,13 +109,10 @@ const Messages = () => {
 	};
 
 	const GettAllChat = async () => {
-		await axios
-			.get(url)
-
-			.then((response) => {
-				console.log("geting all canmessages", response);
-				setChatH(response?.data);
-			});
+		await axios.get(url).then((response) => {
+			console.log("geting all canmessages", response);
+			setChatH(response?.data);
+		});
 	};
 	const getFriends = async () => {
 		if (readData) {

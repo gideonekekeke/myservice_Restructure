@@ -33,6 +33,7 @@ function UsersSearch() {
 	const hist = useNavigate();
 	const data = useSelector((state) => state.persistedReducer.serchValue);
 	console.log("serchdata", data);
+	const userDatas = useSelector((state) => state.persistedReducer.current);
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: "AIzaSyBIe8lcH1rTX_sBfYeopfTGOjudCxQoPGo",
 		libraries: ["places"],
@@ -52,7 +53,7 @@ function UsersSearch() {
 		// eslint-disable-next-line no-undef
 		const directionsService = new google.maps.DirectionsService();
 		const results = await directionsService.route({
-			origin: `${current?.location}`,
+			origin: `${userDatas?.location}`,
 			destination: `${showResult?.location}`,
 			// eslint-disable-next-line no-undef
 			travelMode: google.maps.TravelMode.DRIVING,
@@ -65,14 +66,14 @@ function UsersSearch() {
 
 	React.useEffect(() => {
 		calculateRoute();
-	}, [calculateRoute, showResult]);
+	}, [calculateRoute, showResult, userDatas]);
 
 	const toggleShow = (e) => {
 		setShow(true);
 		console.log("just clicked");
 	};
 	/** @type React.MutableRefObject<HTMLInputElement> */
-	const originRef = current;
+	const originRef = userDatas;
 	/** @type React.MutableRefObject<HTMLInputElement> */
 	const destiantionRef = showResult;
 

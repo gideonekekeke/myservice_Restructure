@@ -70,7 +70,6 @@ const SigninArtecian = () => {
 					});
 
 					console.log("this is my response", response);
-
 					dispach(user(response?.data?.data));
 
 					setLoading(false);

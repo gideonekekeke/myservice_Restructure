@@ -42,6 +42,9 @@ const actions = createSlice({
 		otherUsers: (state, { payload }) => {
 			state.otherUser = payload;
 		},
+		clearSearch: (state) => {
+			state.serchValue = null;
+		},
 	},
 });
 
@@ -54,5 +57,6 @@ export const {
 	allUsers,
 	otherUsers,
 	sendingUser,
+	clearSearch,
 } = actions.actions;
 export default actions.reducer;

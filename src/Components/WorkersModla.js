@@ -12,7 +12,7 @@ import axios from "axios";
 import Loading from "./LoadState";
 import { DelayedRenderer } from "react-delayed-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { shootFriend } from "./Global/actions";
+import { clearSearch, shootFriend } from "./Global/actions";
 import { ImCancelCircle, ImLocation } from "react-icons/im";
 const WorkersModal = () => {
 	const dispatch = useDispatch();
@@ -173,9 +173,8 @@ const WorkersModal = () => {
 
 							<div style={{ color: "silver" }}>{showResult.profession}</div>
 							<p style={{ color: "black" }}>
-								In publishing and graphic design, Lorem ipsum is a placeholder
-								text commonly used to demonstrate the visual form of a document
-								or
+								I use My technical skills and problem-solving abilities to
+								resolve general household maintenance problems.
 							</p>
 						</MainHold>
 					</UpHold>
