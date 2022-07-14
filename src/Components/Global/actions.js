@@ -9,6 +9,7 @@ const initialState = {
 	AddingFriends: [],
 	showing: false,
 	sentTo: null,
+	bookID: null,
 };
 
 const actions = createSlice({
@@ -42,6 +43,9 @@ const actions = createSlice({
 		otherUsers: (state, { payload }) => {
 			state.otherUser = payload;
 		},
+		sendBookID: (state, { payload }) => {
+			state.bookID = payload;
+		},
 		clearSearch: (state) => {
 			state.serchValue = null;
 		},
@@ -58,5 +62,6 @@ export const {
 	otherUsers,
 	sendingUser,
 	clearSearch,
+	sendBookID,
 } = actions.actions;
 export default actions.reducer;

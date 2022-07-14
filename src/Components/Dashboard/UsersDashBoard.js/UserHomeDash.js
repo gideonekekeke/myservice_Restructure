@@ -17,12 +17,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../Global/GlobalContext";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { searching, sendingUser } from "../../Global/actions";
+import { searching, sendBookID, sendingUser } from "../../Global/actions";
 import Swal from "sweetalert2";
 import Loading from "../../LoadState";
 import { ClipLoader } from "react-spinners";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import BookingDetails from "./BookingDetails";
+import RateComps from "./RateComps";
 const UserHomeDash = () => {
 	const { current, setShowResult, showResult, setShowAllResult } =
 		useContext(GlobalContext);
@@ -34,11 +35,15 @@ const UserHomeDash = () => {
 	const [loading, setLoading] = React.useState(false);
 	const [userData, setUserData] = React.useState([]);
 	const [toggleDetail, setToggleDetail] = React.useState(false);
+	const [showRate, setShowRate] = React.useState(false);
 
 	const changeDetail = () => {
 		setToggleDetail(!toggleDetail);
 	};
 
+	const changeRate = () => {
+		setShowRate(!showRate);
+	};
 	const dispatch = useDispatch();
 
 	const getData = async () => {
@@ -49,6 +54,10 @@ const UserHomeDash = () => {
 				setData(response.data.data);
 			});
 	};
+
+	// const sortingRating = showAllResult.sort((a, b) =>
+	// 	a.createdAt > b.createdAt ? -1 : 1,
+	// );
 
 	const gettingUser = async () => {
 		await axios
@@ -127,6 +136,7 @@ const UserHomeDash = () => {
 			<div>
 				{" "}
 				{toggleDetail ? <BookingDetails changeDetail={changeDetail} /> : null}
+				{showRate ? <RateComps /> : null}
 			</div>
 			<div class='page-wrapper dashboard'>
 				<UserHeader />
@@ -464,6 +474,36 @@ const UserHomeDash = () => {
 																								Cancel
 																							</button>
 																						)}
+																					</>
+																				)}
+
+																				{props.ratee ? null : (
+																					<>
+																						{props.done ? (
+																							<button
+																								onClick={() => {
+																									dispatch(
+																										sendingUser(
+																											props.sendingTo,
+																										),
+																									);
+																									dispatch(
+																										sendBookID(props._id),
+																									);
+																									changeRate();
+																								}}
+																								style={{
+																									background: "#e18600",
+																									color: "white",
+																									width: "80px",
+																									height: "30px",
+																									borderRadius: "5px",
+																									marginLeft: "10px",
+																								}}
+																								data-text='View Aplication'>
+																								Rate
+																							</button>
+																						) : null}
 																					</>
 																				)}
 																			</ul>

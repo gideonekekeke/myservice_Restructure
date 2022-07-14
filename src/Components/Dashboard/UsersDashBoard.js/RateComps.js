@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { GlobalContext } from "../../Global/GlobalContext";
@@ -15,8 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { shootFriend } from "../../Global/actions";
 import StarRatingComponent from "react-star-rating-component";
 import { ImCancelCircle, ImLocation } from "react-icons/im";
-const BookingDetails = ({ changeDetail }) => {
+import "./ratestyle.css";
+const RateComps = ({ changeDetail }) => {
 	const sendingTo = useSelector((state) => state.persistedReducer.sentTo);
+	const readID = useSelector((state) => state.persistedReducer.bookID);
 	const dispatch = useDispatch();
 	const hist = useNavigate();
 	const { current } = useContext(GlobalContext);
@@ -33,6 +35,8 @@ const BookingDetails = ({ changeDetail }) => {
 		setLoading(true);
 	};
 
+	const [rating, setRating] = useState(0);
+	const [hover, setHover] = useState(0);
 	// const PostService = async () => {
 	// 	toggleLoad();
 	// 	await axios
@@ -87,33 +91,6 @@ const BookingDetails = ({ changeDetail }) => {
 		addedID: data?._id,
 	};
 
-	const AddingFriend = async () => {
-		const res = await axios
-			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
-				captureDetails,
-			)
-			.then((response) => {
-				setLoading(false);
-				// console.log("i just added this friend now", response);
-				dispatch(shootFriend(response?.data?.data));
-
-				hist("/allmessage");
-			})
-			.catch((error) => {
-				if (error.response.status === 400) {
-					swal({
-						title: "cannot procceed , please Register or login your account",
-						text: "",
-						icon: "error",
-						button: "ok",
-					}).then((value) => {
-						hist("/user-register");
-					});
-				}
-			});
-	};
-
 	const getAllFriends = async () => {
 		await axios
 			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
@@ -127,7 +104,7 @@ const BookingDetails = ({ changeDetail }) => {
 	React.useEffect(() => {
 		fetchDetails();
 		getAllFriends();
-	}, [sendingTo]);
+	}, [sendingTo, readID]);
 	return (
 		<div
 			style={{
@@ -143,67 +120,80 @@ const BookingDetails = ({ changeDetail }) => {
 			class='model'>
 			<Card id='login-modal'>
 				<UpHold>
-					<UserImage src={data.avatar} />
 					<MainHold>
 						<div
 							style={{
 								display: "flex",
-								justifyContent: "space-between",
+								justifyContent: "center",
 								alignItems: "center",
+								flexDirection: "column",
 							}}>
-							{" "}
-							<h5>{data.name}</h5>
-							<div>
-								<ImCancelCircle
-									onClick={changeDetail}
-									style={{ fontSize: "20px", cursor: "pointer" }}
-								/>
+							<p style={{ textAlign: "center" }}>
+								How was your Service with {data.name}?{" "}
+							</p>
+							<h5 style={{ fontWeight: "bold" }}>Rate {data.name}</h5>
+							<br />
+							<div className='star-rating'>
+								{[...Array(5)].map((star, index) => {
+									index += 1;
+									return (
+										<button
+											style={{
+												backgroundColor: "transparent",
+												border: "none",
+												outline: "none",
+												cursor: "pointer",
+												fontSize: "30px",
+											}}
+											type='button'
+											key={index}
+											className={index <= (hover || rating) ? "on" : "off"}
+											onClick={() => {
+												setRating(index);
+
+												axios
+													.post(
+														`https://myserviceprojectapi.herokuapp/api/rateuser/${data._id}/postrate`,
+														{
+															count: index,
+															userRated: current?._id,
+														},
+													)
+													.then((response) => {
+														Swal.fire({
+															title: "Thanks for your feedback",
+															icon: "success",
+														}).then(() => {
+															hist("/user-dashboard");
+
+															window.location.reload();
+														});
+													});
+
+												axios.patch(
+													`https://myserviceprojectapi.herokuapp/api/book/rateUpdate/${readID}
+                                                `,
+													{
+														ratee: true,
+													},
+												);
+											}}
+											onMouseEnter={() => setHover(index)}
+											onMouseLeave={() => setHover(rating)}>
+											<span className='star'>&#9733;</span>
+										</button>
+									);
+								})}
 							</div>
 						</div>
-
-						<div style={{ color: "silver" }}>{data.profession}</div>
-						<StarRatingComponent
-							value={data?.rating?.reduce((x, b) => {
-								return x + b.count / data.rating.length;
-							}, 0)}
-						/>
-
-						<h6 style={{ display: "flex", marginTop: "-10px" }}>
-							<ImLocation />
-							<div style={{ fontWeight: "bold" }}>{data.address}</div>
-						</h6>
-
-						<p style={{ color: "black", marginTop: "10px" }}>
-							I use My technical skills and problem-solving abilities to resolve
-							general household maintenance problems.
-						</p>
 					</MainHold>
 				</UpHold>
-				<ButHold>
-					{allFriend.find(
-						(el) => el?.userFriend === current?._id && el?.addedID === data._id,
-					) ? (
-						<But1
-							onClick={() => {
-								hist("/allmessage");
-							}}>
-							Chat
-						</But1>
-					) : (
-						<But1 onClick={AddingFriend}>Chat</But1>
-					)}
-					<a href={`tel:${data.phoneNumber}`}>
-						<But>Call</But>
-					</a>
-				</ButHold>
 			</Card>
-
-			{loading ? <Loading /> : null}
 		</div>
 	);
 };
 
-export default BookingDetails;
+export default RateComps;
 const But1 = styled.div`
 	height: 40px;
 	width: 120px;
@@ -249,6 +239,10 @@ const ButHold = styled.div`
 
 const MainHold = styled.div`
 	margin-left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 
 	p {
 		width: 250px;
@@ -281,6 +275,10 @@ const Card = styled.div`
 	padding: 30px;
 	border-radius: 10px;
 	font-family: raleway;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 
 	textarea {
 		width: 100%;

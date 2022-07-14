@@ -14,6 +14,7 @@ import { DelayedRenderer } from "react-delayed-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSearch, shootFriend } from "./Global/actions";
 import { ImCancelCircle, ImLocation } from "react-icons/im";
+import StarRatingComponent from "react-star-rating-component";
 const WorkersModal = () => {
 	const dispatch = useDispatch();
 	const hist = useNavigate();
@@ -165,14 +166,19 @@ const WorkersModal = () => {
 									/>
 								</div>
 							</div>
+							<div style={{ color: "silver" }}>{showResult.profession}</div>
+							<StarRatingComponent
+								value={showResult?.rating?.reduce((x, b) => {
+									return x + b.count / showResult.rating.length;
+								}, 0)}
+							/>
 
-							<h6 style={{ display: "flex" }}>
+							<h6 style={{ display: "flex", marginTop: "-10px" }}>
 								<ImLocation />
 								<div style={{ fontWeight: "bold" }}>{showResult.address}</div>
 							</h6>
 
-							<div style={{ color: "silver" }}>{showResult.profession}</div>
-							<p style={{ color: "black" }}>
+							<p style={{ color: "black", marginTop: "5px" }}>
 								I use My technical skills and problem-solving abilities to
 								resolve general household maintenance problems.
 							</p>
