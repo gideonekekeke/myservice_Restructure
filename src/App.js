@@ -27,6 +27,12 @@ import PainterSearch from "./Components/Dashboard/UsersDashBoard.js/PainterSearc
 import UserProfile from "./Components/Dashboard/UsersDashBoard.js/UserProfile";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./Components/Global/PrivateRoute";
+import PricingPakage from "./Components/Dashboard/ArticianDashboard/PricingPakage";
+import UploadProjects from "./Components/Dashboard/UsersDashBoard.js/UploadProjects";
+import ViewProjects from "./Components/Dashboard/UsersDashBoard.js/ViewProjects";
+import BidDetail from "./Components/Dashboard/UsersDashBoard.js/BidDetail";
+import BrowseJobs from "./Components/Dashboard/ArticianDashboard/BrowseJobs";
+import ArtesiansBiddingDetails from "./Components/Dashboard/ArticianDashboard/ArtesiansBiddingDetails";
 function App() {
 	const user = useSelector((state) => state.persistedReducer.current);
 	return (
@@ -65,8 +71,17 @@ function App() {
 
 					<Route path='/user-dashboard' element={<UserHomeDash />} />
 					<Route path='/artician-dashboard' element={<ArticianDashBoard />} />
+					<Route path='/pricing-packages' element={<PricingPakage />} />
 					<Route path='/agent-dashboard' element={<AgentHomeDash />} />
 					<Route path='/user-map' element={<UsersSearch />} />
+					<Route path='/upload-project' element={<UploadProjects />} />
+					<Route path='/all-projects' element={<ViewProjects />} />
+					<Route path='/browse-jobs' element={<BrowseJobs />} />
+					<Route
+						path='/project-detail/:id'
+						element={<ArtesiansBiddingDetails />}
+					/>
+					<Route path='/bid_detail/:id' element={<BidDetail />} />
 					<Route path='/electrician' element={<ElectricianSearch />} />
 					<Route path='/plumber' element={<PlumberSearch />} />
 					<Route path='/carpenter' element={<CarpenterSearch />} />

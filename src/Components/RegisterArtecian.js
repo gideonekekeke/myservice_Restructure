@@ -20,6 +20,7 @@ const RegisterArtecian = () => {
 		email: yup.string().required("full name has to be entered"),
 		password: yup.string().required("full name has to be entered"),
 		address: yup.string().required("email has to be filled"),
+		phoneNumber: yup.number().required("phoneNumber has to be filled"),
 	});
 
 	const {
@@ -44,10 +45,10 @@ const RegisterArtecian = () => {
 	};
 
 	const onSubmit = handleSubmit(async (val) => {
-		const { name, email, password, address } = val;
+		const { name, email, password, address, phoneNumber } = val;
 		console.log(val);
-		const localURL = "http://localhost:2331";
-		const url = `https://myserviceprojectapi.herokuapp.com/api/artician/register`;
+		const localURL = "http://localhost:5000";
+		const url = `http://localhost:5000/api/artician/register`;
 
 		toggleLoad();
 		await axios
@@ -58,6 +59,7 @@ const RegisterArtecian = () => {
 				address,
 				profession,
 				location,
+				phoneNumber,
 			})
 			.then((response) => {
 				Swal.fire({
@@ -152,7 +154,7 @@ const RegisterArtecian = () => {
 							</div>
 							<form>
 								<div class='form-row'>
-									<div class='col'>
+									<div style={{ display: "flex" }} class='col'>
 										<div class='form-group'>
 											<label class='mb-1'>FullName</label>
 											<div class='position-relative icon-form-control'>
@@ -161,6 +163,18 @@ const RegisterArtecian = () => {
 													{...register("name")}
 													required
 													type='text'
+													class='form-control'
+												/>
+											</div>
+										</div>
+										<div style={{ marginLeft: "10px" }} class='form-group'>
+											<label class='mb-1'>PhoneNumber</label>
+											<div class='position-relative icon-form-control'>
+												<i class='mdi mdi-account position-absolute'></i>
+												<input
+													{...register("phoneNumber")}
+													required
+													type='Number'
 													class='form-control'
 												/>
 											</div>

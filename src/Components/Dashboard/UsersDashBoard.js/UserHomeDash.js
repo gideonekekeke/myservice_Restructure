@@ -13,21 +13,29 @@ import { BiFridge } from "react-icons/bi";
 import { GiSpanner } from "react-icons/gi";
 import { FaPaintRoller } from "react-icons/fa";
 import pic from "./img/3.png";
+import pice from "./img/4.gif";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../Global/GlobalContext";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { searching, sendBookID, sendingUser } from "../../Global/actions";
+import {
+	createStepID,
+	searching,
+	sendBookID,
+	sendingUser,
+} from "../../Global/actions";
 import Swal from "sweetalert2";
 import Loading from "../../LoadState";
 import { ClipLoader } from "react-spinners";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import BookingDetails from "./BookingDetails";
 import RateComps from "./RateComps";
+import StepsTaken from "./StepsTaken";
 const UserHomeDash = () => {
 	const { current, setShowResult, showResult, setShowAllResult } =
 		useContext(GlobalContext);
 	const hist = useNavigate();
+
 	const dataValue = useSelector((state) => state.persistedReducer.serchValue);
 	const readUser = useSelector((state) => state.persistedReducer.current);
 	const [data, setData] = React.useState([]);
@@ -36,6 +44,7 @@ const UserHomeDash = () => {
 	const [userData, setUserData] = React.useState([]);
 	const [toggleDetail, setToggleDetail] = React.useState(false);
 	const [showRate, setShowRate] = React.useState(false);
+	const [showSteps, setShowSteps] = React.useState(false);
 
 	const changeDetail = () => {
 		setToggleDetail(!toggleDetail);
@@ -129,12 +138,16 @@ const UserHomeDash = () => {
 		}
 	};
 
+	const toggleSteps = () => {
+		setShowSteps(!showSteps);
+	};
+
 	React.useEffect(() => {}, [dataValue, showResult]);
 
 	return (
 		<>
 			<div>
-				{" "}
+				{showSteps ? <StepsTaken toggleSteps={toggleSteps} /> : null}
 				{toggleDetail ? <BookingDetails changeDetail={changeDetail} /> : null}
 				{showRate ? <RateComps /> : null}
 			</div>
@@ -390,8 +403,8 @@ const UserHomeDash = () => {
 														</tr>
 													</thead>
 													{load ? <ClipLoader size={30} /> : null}
-													{data?.produ <= 0 ? (
-														<div>No Artecian Booked</div>
+													{userData?.service <= 0 ? (
+														<h5>No Artesian Booked</h5>
 													) : null}
 
 													{userData?.service?.map((props) => (
@@ -438,7 +451,7 @@ const UserHomeDash = () => {
 																						style={{
 																							background: "silver",
 																							color: "white",
-																							width: "80px",
+																							width: "130px",
 																							height: "30px",
 																							borderRadius: "5px",
 																							cursor: "not-allowed",
@@ -462,17 +475,57 @@ const UserHomeDash = () => {
 																								Completed
 																							</button>
 																						) : (
-																							<button
-																								style={{
-																									background: "red",
-																									color: "white",
-																									width: "80px",
-																									height: "30px",
-																									borderRadius: "5px",
-																								}}
-																								data-text='View Aplication'>
-																								Cancel
-																							</button>
+																							<>
+																								{props.status ? (
+																									<button
+																										onClick={() => {
+																											toggleSteps();
+																											dispatch(
+																												createStepID(props._id),
+																											);
+																										}}
+																										style={{
+																											background: "#22218C",
+																											color: "white",
+																											width: "120px",
+																											height: "30px",
+																											borderRadius: "5px",
+																										}}
+																										data-text='View Aplication'>
+																										View Steps
+																									</button>
+																								) : (
+																									<button
+																										onClick={() => {
+																											axios
+																												.patch(
+																													`https://myserviceprojectapi.herokuapp.com/api/book/cancelUpdate/${props._id}
+                                                `,
+																													{
+																														cancel: true,
+																													},
+																												)
+																												.then(() => {
+																													Swal.fire({
+																														icon: "success",
+																														title:
+																															"Booking Canceled Successfully",
+																													});
+																													window.location.reload();
+																												});
+																										}}
+																										style={{
+																											background: "red",
+																											color: "white",
+																											width: "80px",
+																											height: "30px",
+																											borderRadius: "5px",
+																										}}
+																										data-text='View Aplication'>
+																										Cancel
+																									</button>
+																								)}
+																							</>
 																						)}
 																					</>
 																				)}

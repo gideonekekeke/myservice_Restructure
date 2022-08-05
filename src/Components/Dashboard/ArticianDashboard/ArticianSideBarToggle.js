@@ -51,6 +51,18 @@ const ArticianSideBarToggle = ({ toggleShow }) => {
 						</a>
 					</li>
 				</Link>
+				<Link to='/pricing-packages'>
+					<li
+						style={{
+							color: "white",
+							marginLeft: "30px",
+							paddingBottom: "15px",
+						}}>
+						<a onClick={toggleShow} style={{ color: "white" }}>
+							<i style={{ color: "white" }} class='la la-box'></i>Packages
+						</a>
+					</li>
+				</Link>
 				<Link to='/artemessage'>
 					<li
 						style={{

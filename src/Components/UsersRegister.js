@@ -48,6 +48,7 @@ const UserRegister = () => {
 		name: yup.string().required("School name has to be filled"),
 		email: yup.string().required("full name has to be entered"),
 		password: yup.string().required("full name has to be entered"),
+		phoneNumber: yup.number().required("phoneNumber has to be entered"),
 	});
 
 	const {
@@ -62,7 +63,7 @@ const UserRegister = () => {
 	};
 
 	const onSubmit = handleSubmit(async (val) => {
-		const { name, email, password } = val;
+		const { name, email, password, phoneNumber } = val;
 		console.log(val);
 		const url = `https://myserviceprojectapi.herokuapp.com/api/user/register`;
 
@@ -73,6 +74,7 @@ const UserRegister = () => {
 				email,
 				password,
 				location,
+				phoneNumber,
 			})
 			.then((response) => {
 				Swal.fire({
@@ -175,6 +177,18 @@ const UserRegister = () => {
 												{...register("name")}
 												required
 												type='text'
+												class='form-control'
+											/>
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='mb-1'>phoneNumber</label>
+										<div class='position-relative icon-form-control'>
+											<i class='mdi mdi-account position-absolute'></i>
+											<input
+												{...register("phoneNumber")}
+												required
+												type='Number'
 												class='form-control'
 											/>
 										</div>

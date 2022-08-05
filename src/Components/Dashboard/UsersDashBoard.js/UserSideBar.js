@@ -18,6 +18,28 @@ const UserSideBar = () => {
 							</a>
 						</li>
 					</Link>
+					<Link to='/upload-project'>
+						<li style={{ color: "white" }} class='active'>
+							<a style={{ color: "white" }}>
+								{" "}
+								<i
+									style={{ color: "white" }}
+									class='la la-paper-plane'></i>{" "}
+								Upload Project
+							</a>
+						</li>
+					</Link>
+					<Link to='/all-projects'>
+						<li style={{ color: "white" }} class='active'>
+							<a style={{ color: "white" }}>
+								{" "}
+								<i
+									style={{ color: "white" }}
+									class='la la-file-invoice'></i>{" "}
+								View All Projects
+							</a>
+						</li>
+					</Link>
 					<li style={{ color: "white" }}>
 						<a href='/allmessage' style={{ color: "white" }}>
 							{" "}

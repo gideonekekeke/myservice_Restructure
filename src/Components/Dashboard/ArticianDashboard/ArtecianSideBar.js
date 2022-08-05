@@ -22,6 +22,18 @@ const ArtecianSideBar = () => {
 							Services
 						</a>
 					</li>
+					<li>
+						<a href='/browse-jobs' style={{ color: "white" }}>
+							<i style={{ color: "white" }} class='la la-briefcase'></i>
+							Browse Jobs
+						</a>
+					</li>
+
+					<li style={{ color: "white" }}>
+						<a style={{ color: "white" }} href='/pricing-packages'>
+							<i style={{ color: "white" }} class='la la-box'></i>Packages
+						</a>
+					</li>
 					<li style={{ color: "white" }}>
 						<a href='/artemessage' style={{ color: "white" }}>
 							{" "}

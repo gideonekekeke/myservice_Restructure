@@ -10,6 +10,7 @@ const initialState = {
 	showing: false,
 	sentTo: null,
 	bookID: null,
+	stepID: null,
 };
 
 const actions = createSlice({
@@ -46,6 +47,9 @@ const actions = createSlice({
 		sendBookID: (state, { payload }) => {
 			state.bookID = payload;
 		},
+		createStepID: (state, { payload }) => {
+			state.stepID = payload;
+		},
 		clearSearch: (state) => {
 			state.serchValue = null;
 		},
@@ -63,5 +67,6 @@ export const {
 	sendingUser,
 	clearSearch,
 	sendBookID,
+	createStepID,
 } = actions.actions;
 export default actions.reducer;
