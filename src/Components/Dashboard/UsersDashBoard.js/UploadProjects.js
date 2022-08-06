@@ -17,7 +17,6 @@ const UploadProjects = () => {
 	const [loading, setLoading] = React.useState(false);
 	const { current } = useContext(GlobalContext);
 	const navigate = useNavigate();
-
 	const [title, setTitle] = React.useState("");
 	const [description, setDescription] = React.useState("");
 	const [location, setLocation] = React.useState("");

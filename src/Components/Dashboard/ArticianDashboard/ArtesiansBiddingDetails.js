@@ -1,11 +1,108 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ArtecianHeader from "./ArtecianHeader";
 import ArtecianSideBar from "./ArtecianSideBar";
 import { BiAddToQueue, BiCheck, BiSticker } from "react-icons/bi";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { GlobalContext } from "../../Global/GlobalContext";
+import Swal from "sweetalert2";
+import Loading from "../../LoadState";
 const ArtesiansBiddingDetails = () => {
+	const { id } = useParams();
+	const { current } = useContext(GlobalContext);
+	const navigate = useNavigate();
+
+	const [userData, setUserData] = React.useState([]);
+
+	const [load, setLoad] = React.useState(true);
+	const [data, setData] = React.useState([]);
+	const [bidData, setBidData] = React.useState([]);
+	const [price, setPrice] = React.useState("");
+	const [description, setDescription] = React.useState("");
+	const [loading, setLoading] = React.useState(false);
+	const gettingUser = async () => {
+		await axios
+			.get(`https://myserviceprojectapi.herokuapp.com/api/job/${id}`)
+			.then((response) => {
+				// setLoad(false);
+				// console.log("main userdatahdfhdfgchf", response.data.data);
+				setUserData(response.data.data);
+				setLoad(false);
+			});
+	};
+
+	const toggleLoad = () => {
+		setLoading(true);
+	};
+
+	const gettingUserArtesian = async () => {
+		await axios
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
+			)
+			.then((response) => {
+				setLoad(false);
+				// console.log("main userdatahdfhdf", response.data.data);
+				setData(response.data.data);
+			});
+	};
+
+	const placeBid = async () => {
+		if (data.bid <= 0) {
+			Swal.fire({
+				icon: "error",
+				title: "cannot place a bid anymore, subscribe to get more bid",
+			});
+		} else {
+			toggleLoad();
+			await axios
+				.post(
+					`https://myserviceprojectapi.herokuapp.com/api/bid/create/${id}`,
+					{
+						userBid: current?._id,
+						description,
+						price,
+					},
+				)
+				.then(() => {
+					Swal.fire({
+						icon: "success",
+						title: "Bid placed successfully",
+					}).then(() => {
+						navigate("/browse-jobs");
+					});
+					setLoading(false);
+				});
+
+			axios
+				.patch(
+					`https://myserviceprojectapi.herokuapp.com/api/artician/reducingbid/${current._id}`,
+				)
+				.then(() => {
+					console.log("correct");
+				});
+		}
+	};
+
+	const getAllBid = async () => {
+		await axios
+			.get(`https://myserviceprojectapi.herokuapp.com/api/bid`)
+			.then((response) => {
+				setLoad(false);
+				// console.log("main bid", response.data.data);
+				setBidData(response.data.data);
+			});
+	};
+
+	React.useEffect(() => {
+		gettingUser();
+		gettingUserArtesian();
+		getAllBid();
+	}, [current]);
 	return (
 		<>
+			{loading ? <Loading /> : null}
 			<div>
 				<ArtecianHeader />
 				<ArtecianSideBar />
@@ -18,34 +115,36 @@ const ArtesiansBiddingDetails = () => {
 								<Jobs>
 									<Card to='/bid_detail'>
 										<TitleHold>
-											<Title>Need for an Electrician</Title>
-											<Category>Electricity</Category>
+											<Title>{userData.title}</Title>
+											<Category>{userData.skill}</Category>
 										</TitleHold>
-										<Description>
-											I am looking for an electrician who is an expert in
-											electrical wiring connection. I need to do some wire
-											reconnections in my house and will also complete the
-											project within due deadline..
-										</Description>
+										<Description>{userData.description}</Description>
 										<Tools>
 											{" "}
-											<b>Skills: </b> wiring, seamless patching, non-hazardous
-											electrical wires connection etc
+											<b>Skills: </b> {userData.skill}
 										</Tools>
 										<Id>
-											Project id: <b>#22218C</b>
+											Project id: <b>#{userData._id?.slice(2, 9)}</b>
 										</Id>
-										<Bid>$20/hr (Avg Bid)</Bid>
+										<Bid>#{userData?.budget?.toLocaleString()} (Avg Bid)</Bid>
 										<Line></Line>
 										<TitleHold>
 											<Title>
 												Offer to work on this project? Place a Bid Now
 											</Title>
 										</TitleHold>
-										<BidHold>
+										<BidHold
+											onSubmit={(e) => {
+												e.preventDefault();
+												placeBid();
+											}}>
 											<InputHold>
 												<h4>Your bid for this job</h4>
 												<Input
+													required
+													onChange={(e) => {
+														setPrice(e.target.value);
+													}}
 													type='number'
 													placeholder='Enter Your Bid in #(Naira)'
 												/>
@@ -53,11 +152,29 @@ const ArtesiansBiddingDetails = () => {
 											<InputHold>
 												<h4>Write a Short Note</h4>
 												<Input2
+													required
+													onChange={(e) => {
+														setDescription(e.target.value);
+													}}
 													type='text'
 													placeholder='Your words should not be less than 100'
 												/>
 											</InputHold>
-											<Button>Bid on this job</Button>
+											{bidData?.find(
+												(el) =>
+													el?.userBid === current?._id && el.biddingUser === id,
+											) ? (
+												<Button
+													disabled
+													style={{
+														backgroundColor: "silver",
+														cursor: "not-allowed",
+													}}>
+													Already Bid this job
+												</Button>
+											) : (
+												<Button>Bid on this job</Button>
+											)}
 										</BidHold>
 										<Requirement>
 											<H_Hold>
@@ -306,7 +423,7 @@ const Id = styled.div`
 	margin-top: 30px;
 	margin-left: 10px;
 `;
-const BidHold = styled.div`
+const BidHold = styled.form`
 	width: 80%;
 	display: flex;
 	justify-content: space-between;
@@ -359,7 +476,7 @@ const Input = styled.input`
 		margin-bottom: 20px;
 	}
 `;
-const Button = styled.div`
+const Button = styled.button`
 	/* padding: 10px 10px; */
 	/* background-color: #22218C; */
 	background-color: red;

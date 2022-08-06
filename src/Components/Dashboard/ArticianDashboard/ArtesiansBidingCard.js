@@ -18,7 +18,7 @@ const ArtesiansBidingCard = () => {
 	const [userData, setUserData] = React.useState([]);
 
 	const [load, setLoad] = React.useState(true);
-
+	const [data, setData] = React.useState([]);
 	const gettingUser = async () => {
 		await axios
 			.get(`https://myserviceprojectapi.herokuapp.com/api/job`)
@@ -30,13 +30,30 @@ const ArtesiansBidingCard = () => {
 			});
 	};
 
+	const gettingUserData = async () => {
+		await axios
+			.get(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
+			)
+			.then((response) => {
+				setLoad(false);
+				console.log("main userdatahdfhdf", response.data.data);
+				setData(response.data.data);
+			});
+	};
+
 	React.useEffect(() => {
 		gettingUser();
+		gettingUserData();
 	}, [current]);
 	return (
 		<Container>
 			<Wrapper>
 				<h2>All Projects </h2>
+				<h5>
+					You Currently have{" "}
+					<span style={{ fontWeight: "bold" }}>{data?.bid}</span> bids left
+				</h5>
 				<Head>
 					<Div>
 						<Select>
@@ -48,6 +65,7 @@ const ArtesiansBidingCard = () => {
 						</Select>
 						<Jobs>1,270 jobs found, pricing in dollar</Jobs>
 					</Div>
+
 					<Rec>
 						<Box>
 							<BiArrowFromRight />
@@ -84,8 +102,8 @@ const ArtesiansBidingCard = () => {
 									</TitleHold>
 									<Description>{props.description}</Description>
 									<Tools>{props.skill}</Tools>
-									<Bid>#{props.budget.toLocaleString()} (Avg Bid)</Bid>
-									<button> View More</button>
+									<Bid>#{props.budget?.toLocaleString()} (Avg Bid)</Bid>
+									<button> Bid Now</button>
 									<Line></Line>
 								</Card>
 							) : null}
