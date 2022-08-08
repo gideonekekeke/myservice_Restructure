@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BiAddToQueue, BiCheck, BiSticker } from "react-icons/bi";
-import { useParams } from "react-router-dom";
-import StarRatingComponent from "react-star-rating-component";
+import { useNavigate, useParams } from "react-router-dom";
+
 import styled from "styled-components";
 import UserHeader from "./UserHearder";
 import UserSideBar from "./UserSideBar";
 import axios from "axios";
+import ProfilePage from "./ProfilePage";
+import Swal from "sweetalert2";
+import Loading from "../../LoadState";
+import { GlobalContext } from "../../Global/GlobalContext";
 
 const BidDetail = () => {
 	const price = 20000;
 	const { id } = useParams();
+	const hist = useNavigate();
 
 	const [userData, setUserData] = React.useState([]);
+	const { current } = useContext(GlobalContext);
+
+	const [show, setShow] = React.useState(false);
 
 	const [load, setLoad] = React.useState(true);
+	const [loading, setLoading] = React.useState(false);
 
 	const gettingUser = async () => {
 		await axios
@@ -26,11 +35,20 @@ const BidDetail = () => {
 			});
 	};
 
+	const toggleShow = () => {
+		setShow(!show);
+	};
+
+	const toggleLoad = () => {
+		setLoading(true);
+	};
+
 	React.useEffect(() => {
 		gettingUser();
 	}, []);
 	return (
 		<>
+			{loading ? <Loading /> : null}
 			<div class=''>
 				<UserHeader />
 				<UserSideBar />
@@ -59,33 +77,130 @@ const BidDetail = () => {
 										<TitleHold>
 											<Title>Artesians Bidding For this Project</Title>
 										</TitleHold>
-										<ArteCard>
-											<Hol>
-												<ArtImage />
-												<NameHold>
-													<Name>name</Name>
-													<Prof>Proffession</Prof>
-													<Prof>
-														{" "}
-														<StarRatingComponent />
-													</Prof>
-												</NameHold>
-											</Hol>
-											<Quot>quotation</Quot>
-											<br />
-											<Diver>
-												<Bud>Biding Price : #{price.toLocaleString()}</Bud>
-												<button
-													style={{
-														background: "#22218C",
-														color: "white",
-														width: "120px",
-														borderRadius: "5px",
-													}}>
-													Accept Bid
-												</button>
-											</Diver>
-										</ArteCard>
+										<div
+											style={{
+												display: "flex",
+												flexWrap: "wrap",
+												width: "100%",
+											}}>
+											{userData?.totalBid?.map((props) => (
+												<ArteCard>
+													<ProfilePage id={props?.userBid} />
+													<Quot>{props.description}</Quot>
+													<br />
+													<Diver>
+														<Bud>
+															Biding Price : #{props?.price?.toLocaleString()}
+														</Bud>
+
+														{show ? (
+															<Container1>
+																<Card1>
+																	<h4>Are you sure?</h4>
+																	<p style={{ textAlign: "center" }}>
+																		By clicking yes you agree to the price and
+																		offer this artesian is rendring to you.
+																	</p>
+																	<ButtonHold>
+																		<button
+																			onClick={() => {
+																				toggleLoad();
+																				toggleShow();
+																				axios
+																					.post(
+																						`https://myserviceprojectapi.herokuapp.com/api/book/${current?._id}/booking`,
+																						{
+																							bookTitle: `${userData.title}`,
+																							Desc: `${userData.description}`,
+																							price: `${props.price}`,
+																							userId: `${current._id}`,
+																							sendingTo: `${props?.userBid}`,
+																						},
+																					)
+																					.then((response) => {
+																						Swal.fire({
+																							position: "center",
+																							icon: "success",
+																							title:
+																								"Bid accepted and Booked Successfull",
+																							timer: 2500,
+																						}).then(() => {
+																							window.location.reload(
+																								hist("/user-dashboard"),
+																							);
+																						});
+
+																						setLoading(false);
+																					})
+																					.catch(() => {
+																						Swal.fire({
+																							position: "center",
+																							icon: "error",
+																							title: "An error occured",
+																							showConfirmButton: false,
+																							timer: 2500,
+																						});
+																						setLoading(false);
+																					});
+
+																				axios
+																					.patch(
+																						`https://myserviceprojectapi.herokuapp.com/api/job/acceptingbid/${userData?._id}`,
+																					)
+																					.then(() => {
+																						console.log("updated");
+																					});
+																			}}
+																			style={{
+																				background: "green",
+																				color: "white",
+																			}}
+																			bg='green'>
+																			Yes
+																		</button>
+																		<button
+																			style={{
+																				background: "red",
+																				color: "white",
+																			}}
+																			bg='red'
+																			onClick={() => {
+																				toggleShow();
+																			}}>
+																			No
+																		</button>
+																	</ButtonHold>
+																</Card1>
+															</Container1>
+														) : null}
+
+														{userData?.acceptBid ? (
+															<button
+																style={{
+																	background: "silver",
+																	color: "white",
+																	width: "120px",
+																	borderRadius: "5px",
+																	cursor: "not-allowed",
+																}}>
+																offer Closed
+															</button>
+														) : (
+															<button
+																onClick={toggleShow}
+																style={{
+																	background: "#22218C",
+																	color: "white",
+																	width: "120px",
+																	borderRadius: "5px",
+																}}>
+																Accept Bid
+															</button>
+														)}
+													</Diver>
+												</ArteCard>
+											))}
+										</div>
 										<Requirement>
 											<H_Hold>
 												<H>
@@ -141,6 +256,50 @@ const BidDetail = () => {
 
 export default BidDetail;
 
+const ButtonHold = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 300px;
+	button {
+		height: 40px;
+		width: 120px;
+		cursor: pointer;
+		background-color: ${({ bg }) => bg};
+	}
+`;
+
+const Container1 = styled.div`
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+`;
+
+const Card1 = styled.div`
+	height: 200px;
+	width: 350px;
+	background-color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	overflow: hidden;
+	z-index: 1;
+	overflow: hidden;
+	h4 {
+		margin-top: 50px;
+	}
+`;
+
 const Bud = styled.div``;
 const Diver = styled.div`
 	display: flex;
@@ -159,6 +318,7 @@ const ArteCard = styled.div`
 	color: black;
 	border-radius: 5px;
 	box-shadow: rgba(5, 0, 0, 0.25) 0px 1px 4px;
+	margin: 10px;
 	/* background-color: orange; */
 
 	:hover {

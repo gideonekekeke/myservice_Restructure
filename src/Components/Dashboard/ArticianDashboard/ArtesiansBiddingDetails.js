@@ -170,7 +170,7 @@ const ArtesiansBiddingDetails = () => {
 														backgroundColor: "silver",
 														cursor: "not-allowed",
 													}}>
-													Already Bid this job
+													Already Bid on this job
 												</Button>
 											) : (
 												<Button>Bid on this job</Button>

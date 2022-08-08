@@ -38,6 +38,38 @@ const UserSideBarToggle = ({ toggleShow }) => {
 						</a>
 					</li>
 				</Link>
+
+				<Link to='/upload-project'>
+					<li
+						style={{
+							color: "white",
+							marginLeft: "30px",
+							paddingBottom: "15px",
+						}}
+						class='active'>
+						<a onClick={toggleShow} style={{ color: "white" }}>
+							{" "}
+							<i style={{ color: "white" }} class='la la-paper-plane'></i>{" "}
+							Upload Project
+						</a>
+					</li>
+				</Link>
+				<Link to='/all-projects'>
+					<li
+						style={{
+							color: "white",
+							marginLeft: "30px",
+							paddingBottom: "15px",
+						}}
+						class='active'>
+						<a onClick={toggleShow} style={{ color: "white" }}>
+							{" "}
+							<i style={{ color: "white" }} class='la la-file-invoice'></i> View
+							All Projects
+						</a>
+					</li>
+				</Link>
+
 				<Link to='/allmessage'>
 					<li
 						style={{

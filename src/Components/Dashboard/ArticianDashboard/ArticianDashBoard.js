@@ -144,7 +144,7 @@ const ArticianDashBoard = () => {
 													<thead>
 														<tr>
 															<th>Title</th>
-															<th>Materials</th>
+															<th>Source</th>
 															<th>Price(#)</th>
 															<th>Status</th>
 															<th>Action</th>

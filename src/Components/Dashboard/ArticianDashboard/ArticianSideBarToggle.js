@@ -51,6 +51,20 @@ const ArticianSideBarToggle = ({ toggleShow }) => {
 						</a>
 					</li>
 				</Link>
+
+				<Link to='/browse-jobs'>
+					<li
+						style={{
+							color: "white",
+							marginLeft: "30px",
+							paddingBottom: "15px",
+						}}>
+						<a onClick={toggleShow} style={{ color: "white" }}>
+							<i style={{ color: "white" }} class='la la-briefcase'></i>
+							Browse Jobs
+						</a>
+					</li>
+				</Link>
 				<Link to='/pricing-packages'>
 					<li
 						style={{
