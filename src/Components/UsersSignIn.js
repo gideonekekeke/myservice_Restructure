@@ -63,7 +63,7 @@ const UsersSignin = () => {
 
 				dispach(user(response?.data?.data));
 				setLoading(false);
-				hist("/user-dashboard");
+				window.location.reload(hist("/user-dashboard"));
 			})
 			.catch((error) => {
 				Swal.fire({

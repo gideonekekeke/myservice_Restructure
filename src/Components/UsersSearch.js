@@ -47,8 +47,13 @@ function UsersSearch() {
 	const [show, setShow] = React.useState(false);
 
 	async function calculateRoute() {
-		if (originRef === "" || destiantionRef === "") {
-			return;
+		if (originRef === "" || destiantionRef === "" || !showResult.location) {
+			Swal.fire({
+				icon: "error",
+				title: "an error occured while searching, please try again",
+			}).then(() => {
+				window.location.reload(hist("/user-dashboard"));
+			});
 		}
 		// eslint-disable-next-line no-undef
 		const directionsService = new google.maps.DirectionsService();

@@ -13,6 +13,12 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import StarRatingComponent from "react-star-rating-component";
+import {
+	BiArrowFromLeft,
+	BiArrowFromRight,
+	BiLeftArrowAlt,
+	BiRightArrowAlt,
+} from "react-icons/bi";
 const ViewMoreAtecians = () => {
 	const hist = useNavigate();
 	const userData = useSelector((state) => state.persistedReducer.serviceId);
@@ -24,8 +30,10 @@ const ViewMoreAtecians = () => {
 	console.log(userData);
 	const { showAllResult, current } = useContext(GlobalContext);
 	const dispatch = useDispatch();
+
 	const [allFriend, setAllFriend] = React.useState([]);
 	const [myDate, setMyDate] = React.useState([]);
+	const [searchValue, setSearchValue] = React.useState("");
 
 	const [show, setShow] = React.useState(false);
 	const [loading, setLoading] = React.useState(false);
@@ -65,6 +73,15 @@ const ViewMoreAtecians = () => {
 		getAllFriends();
 		allData();
 		console.log("this is me", myDate);
+
+		if (showAllResult.length <= 0) {
+			Swal.fire({
+				icon: "error",
+				title: "Data Lost, Please Search again",
+			}).then(() => {
+				hist("/user-dashboard");
+			});
+		}
 	}, [userData, current, articianName]);
 
 	return (
@@ -74,175 +91,234 @@ const ViewMoreAtecians = () => {
 			<br />
 			<section class='user-dashboard'>
 				<div class='dashboard-outer'>
+					<br />
+
 					<h3 style={{ marginLeft: "10px" }}> All {articianName}s</h3>
 					<br />
-					{showAllResult?.map((props, i) => (
-						<>
-							<Container>
-								<Holdeer>
-									<UserImage src={props.avatar} />
+					<Head>
+						<Div>
+							<input
+								onChange={(e) => {
+									setSearchValue(e.target.value);
+								}}
+								placeholder='search by name...'
+							/>
+						</Div>
+						<Rec>
+							<Box>
+								<BiArrowFromRight />
+							</Box>
+							<Box>
+								<BiLeftArrowAlt />
+							</Box>
+							<Box>1</Box>
+							<Box>2</Box>
+							<Box>3</Box>
+							<Box>
+								<BiRightArrowAlt />
+							</Box>
+							<Box>
+								<BiArrowFromLeft />
+							</Box>
+						</Rec>
+					</Head>
 
-									<Hold>
-										<h5 style={{ fontWeight: "bold" }}>{props.name}</h5>
-										<h6
-											style={{
-												color: "silver",
-											}}>
-											{props.profession}
-											<br />
+					{showAllResult
+						?.filter((val) => {
+							if (searchValue === "") {
+								return val;
+							} else if (
+								val.name.toLowerCase().includes(searchValue.toLowerCase())
+							) {
+								return val;
+							}
+						})
 
-											<StarRatingComponent
-												value={props?.rating?.reduce((x, b) => {
-													return x + b.count / props.rating.length;
-												}, 0)}
-											/>
-										</h6>
+						?.map((props, i) => (
+							<>
+								<Container>
+									<Holdeer>
+										<UserImage src={props.avatar} />
 
-										<h6 style={{ display: "flex" }}>
-											<ImLocation />
-											<div style={{ fontWeight: "bold" }}>{props.location}</div>
-										</h6>
-
-										<MainButHold>
-											<p>
-												I use My technical skills and problem-solving abilities
-												to resolve general household maintenance problems.
-											</p>
-
-											<Coti style={{ display: "flex" }} className=''>
-												{allFriend.find(
-													(el) =>
-														el?.userFriend === current?._id &&
-														el?.addedID === props._id,
-												) ? (
-													<But1
-														onClick={() => {
-															hist("/allmessage");
-														}}>
-														Chat
-													</But1>
-												) : (
-													<But1
-														onClick={() => {
-															axios
-																.post(
-																	`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
-																	{
-																		userName: props?.name,
-																		userImage: props?.avatar,
-																		addedID: props?._id,
-																	},
-																)
-																.then((response) => {
-																	setLoading(false);
-																	// console.log("i just added this friend now", response);
-																	dispatch(shootFriend(response?.data?.data));
-
-																	hist("/allmessage");
-																})
-																.catch((error) => {
-																	if (error.response.status === 400) {
-																		swal({
-																			title:
-																				"cannot procceed , please Register or login your account",
-																			text: "",
-																			icon: "error",
-																			button: "ok",
-																		}).then((value) => {
-																			hist("/user-register");
-																		});
-																	}
-																});
-														}}>
-														Chat
-													</But1>
-												)}
-
-												<a href={`tel:${props.phoneNumber}`}>
-													<But>Call</But>
-												</a>
-											</Coti>
-										</MainButHold>
-
-										<ButHold
-											onClick={() => {
-												dispatch(getServiceId(props._id));
-												toggleShow(props._id);
-												console.log("this is the id", props._id);
-
-												// axios.patch(
-												// 	`https://myserviceprojectapi.herokuapp.com/artician/editshow/${props._id}`,
-												// );
-											}}>
-											<div
+										<Hold>
+											<h5 style={{ fontWeight: "bold" }}>{props.name}</h5>
+											<h6
 												style={{
-													color: "black",
-													cursor: "pointer",
-													borderBottom: "1px solid silver",
+													color: "silver",
 												}}>
-												Services Offered for {props.name}
-												<AiOutlineDown />
-											</div>
-										</ButHold>
+												{props.profession}
+												<br />
 
-										{props._id === userData && shower && show ? (
-											<>
-												{props.produ.map(({ title, material, price, id }) => (
-													<ServiceHold>
-														<h5 style={{ fontWeight: "bold" }}>{title}</h5>
-														<MaterialHold>{material}</MaterialHold>
-														<h6>#{price}</h6>
-														<But2
+												<StarRatingComponent
+													value={props?.rating?.reduce((x, b) => {
+														return x + b.count / props.rating.length;
+													}, 0)}
+												/>
+											</h6>
+
+											<h6 style={{ display: "flex" }}>
+												<ImLocation />
+												<div style={{ fontWeight: "bold" }}>
+													{props.location}
+												</div>
+											</h6>
+
+											<MainButHold>
+												<p>
+													I use My technical skills and problem-solving
+													abilities to resolve general household maintenance
+													problems.
+												</p>
+
+												<Coti style={{ display: "flex" }} className=''>
+													{allFriend.find(
+														(el) =>
+															el?.userFriend === current?._id &&
+															el?.addedID === props._id,
+													) ? (
+														<But1
 															onClick={() => {
-																toggleLoad();
-																axios
-																	.post(
-																		`https://myserviceprojectapi.herokuapp.com/api/book/${current?._id}/booking`,
-																		{
-																			bookTitle: title,
-																			Desc: material,
-																			price: price,
-																			userId: `${current._id}`,
-																			sendingTo: `${userData}`,
-																		},
-																	)
-																	.then((response) => {
-																		Swal.fire({
-																			position: "center",
-																			icon: "success",
-																			title: "Booked Successfull",
-																			timer: 2500,
-																		}).then(() => {
-																			window.location.reload(
-																				hist("/user-dashboard"),
-																			);
-																		});
+																hist("/allmessage");
+															}}>
+															Chat
+														</But1>
+													) : (
+														<>
+															{props.detector ? (
+																<But1
+																	onClick={() => {
+																		axios
+																			.post(
+																				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
+																				{
+																					userName: props?.name,
+																					userImage: props?.avatar,
+																					addedID: props?._id,
+																				},
+																			)
+																			.then((response) => {
+																				setLoading(false);
+																				// console.log("i just added this friend now", response);
+																				dispatch(
+																					shootFriend(response?.data?.data),
+																				);
 
-																		setLoading(false);
-																	})
-																	.catch(() => {
-																		Swal.fire({
-																			position: "center",
-																			icon: "error",
-																			title: "An error occured",
-																			showConfirmButton: false,
-																			timer: 2500,
+																				hist("/allmessage");
+																			})
+																			.catch((error) => {
+																				if (error.response.status === 400) {
+																					swal({
+																						title:
+																							"cannot procceed , please Register or login your account",
+																						text: "",
+																						icon: "error",
+																						button: "ok",
+																					}).then((value) => {
+																						hist("/user-register");
+																					});
+																				}
+																			});
+																	}}>
+																	Chat
+																</But1>
+															) : (
+																<But1
+																	style={{ width: "150px", color: "white" }}>
+																	<a
+																		style={{ color: "white" }}
+																		href={`sms:0${props.phoneNumber};?&body=${current.name} Have Requested for your services`}>
+																		Send Message
+																	</a>
+																</But1>
+															)}
+														</>
+													)}
+
+													<a href={`tel:${props.phoneNumber}`}>
+														<But>Call</But>
+													</a>
+												</Coti>
+											</MainButHold>
+
+											<ButHold
+												onClick={() => {
+													dispatch(getServiceId(props._id));
+													toggleShow(props._id);
+													console.log("this is the id", props._id);
+
+													// axios.patch(
+													// 	`https://myserviceprojectapi.herokuapp.com/artician/editshow/${props._id}`,
+													// );
+												}}>
+												<div
+													style={{
+														color: "black",
+														cursor: "pointer",
+														borderBottom: "1px solid silver",
+													}}>
+													Services Offered for {props.name}
+													<AiOutlineDown />
+												</div>
+											</ButHold>
+
+											{props._id === userData && shower && show ? (
+												<>
+													{props.produ.map(({ title, material, price, id }) => (
+														<ServiceHold>
+															<h5 style={{ fontWeight: "bold" }}>{title}</h5>
+															<MaterialHold>{material}</MaterialHold>
+															<h6>#{price}</h6>
+															<But2
+																onClick={() => {
+																	toggleLoad();
+																	axios
+																		.post(
+																			`https://myserviceprojectapi.herokuapp.com/api/book/${current?._id}/booking`,
+																			{
+																				bookTitle: title,
+																				Desc: material,
+																				price: price,
+																				userId: `${current._id}`,
+																				sendingTo: `${userData}`,
+																			},
+																		)
+																		.then((response) => {
+																			Swal.fire({
+																				position: "center",
+																				icon: "success",
+																				title: "Booked Successfull",
+																				timer: 2500,
+																			}).then(() => {
+																				window.location.reload(
+																					hist("/user-dashboard"),
+																				);
+																			});
+
+																			setLoading(false);
+																		})
+																		.catch(() => {
+																			Swal.fire({
+																				position: "center",
+																				icon: "error",
+																				title: "An error occured",
+																				showConfirmButton: false,
+																				timer: 2500,
+																			});
+																			setLoading(false);
 																		});
-																		setLoading(false);
-																	});
-															}}
-															style={{ marginTop: "20px" }}>
-															Book Service
-														</But2>
-													</ServiceHold>
-												))}
-											</>
-										) : null}
-									</Hold>
-								</Holdeer>
-							</Container>
-						</>
-					))}
+																}}
+																style={{ marginTop: "20px" }}>
+																Book Service
+															</But2>
+														</ServiceHold>
+													))}
+												</>
+											) : null}
+										</Hold>
+									</Holdeer>
+								</Container>
+							</>
+						))}
 				</div>
 
 				{loading ? <Loading /> : null}
@@ -252,6 +328,69 @@ const ViewMoreAtecians = () => {
 };
 
 export default ViewMoreAtecians;
+
+const Head = styled.div`
+	width: 100%;
+	/* height: 100px; */
+	/* background-color: aliceblue; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px;
+	/* flex-wrap: wrap; */
+
+	@media Screen and (max-width: 768px) {
+		flex-direction: column;
+		padding: 2px 2px;
+		/* margin-right: 50px; */
+		/* align-items: center; */
+	}
+`;
+const Div = styled.div`
+	width: 500px;
+	/* background-color: green; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	@media Screen and (max-width: 768px) {
+		justify-content: center;
+	}
+
+	input {
+		width: 320px;
+		height: 40px;
+		border: 1px solid silver;
+		padding-left: 20px;
+		border-radius: 10px;
+	}
+`;
+
+const Rec = styled.div`
+	width: 400px;
+	/* background-color: pink; */
+	display: flex;
+	margin-left: 10px;
+	justify-content: center;
+	align-items: center;
+`;
+const Box = styled.div`
+	width: 30px;
+	height: 30px;
+	/* background-color: salmon; */
+	border: 1px solid grey;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	:hover {
+		background-color: #22218c;
+		color: white;
+		cursor: pointer;
+		transition: all 350ms;
+	}
+`;
 
 const Coti = styled.div`
 	@media screen and (max-width: 600px) {

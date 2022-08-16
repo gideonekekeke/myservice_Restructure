@@ -85,7 +85,13 @@ const UserHomeDash = () => {
 	React.useEffect(() => {
 		getData();
 		gettingUser();
-	}, [current]);
+	}, [current, dataValue]);
+
+	const toggleSteps = () => {
+		setShowSteps(!showSteps);
+	};
+
+	React.useEffect(() => {}, [dataValue, showResult]);
 
 	const submit = async () => {
 		try {
@@ -137,12 +143,6 @@ const UserHomeDash = () => {
 			setLoading(false);
 		}
 	};
-
-	const toggleSteps = () => {
-		setShowSteps(!showSteps);
-	};
-
-	React.useEffect(() => {}, [dataValue, showResult]);
 
 	return (
 		<>

@@ -36,7 +36,7 @@ const VerificationPage = () => {
 			<Box>
 				<h2>Verification Success</h2>
 				<p>We have successfully Verified your email, you can now proceed</p>
-				<ButHol onClick={onSubmit}>CLICK TO CONTINUE >>></ButHol>
+				<ButHol onClick={onSubmit}>CLICK TO CONTINUE </ButHol>
 			</Box>
 		</Container>
 	);

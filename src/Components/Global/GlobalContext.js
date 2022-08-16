@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 export const GlobalContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvide = ({ children }) => {
 	React.useEffect(() => {
 		setCurrent(user);
 		console.log("this is the current", current);
+
 		// console.log("this is redux",readGroupId )
 	}, []);
 

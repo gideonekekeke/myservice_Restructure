@@ -63,42 +63,50 @@ const UserRegister = () => {
 	};
 
 	const onSubmit = handleSubmit(async (val) => {
-		const { name, email, password, phoneNumber } = val;
-		console.log(val);
-		const url = `https://myserviceprojectapi.herokuapp.com/api/user/register`;
-
-		toggleLoad();
-		await axios
-			.post(url, {
-				name,
-				email,
-				password,
-				location,
-				phoneNumber,
-			})
-			.then((response) => {
-				Swal.fire({
-					position: "center",
-					icon: "success",
-					title: "Account Created Successfull",
-					showConfirmButton: false,
-					timer: 2500,
-				});
-				setLoading(false);
-				console.log(response);
-				dispach(user(response?.data?.data));
-				hist("/");
-			})
-			.catch((error) => {
-				Swal.fire({
-					position: "center",
-					icon: "error",
-					title: "An error occurred",
-					showConfirmButton: false,
-					timer: 2500,
-				});
-				setLoading(false);
+		if (location === "") {
+			Swal.fire({
+				icon: "error",
+				title: "Please Fill your House Address",
 			});
+		} else {
+			const { name, email, password, phoneNumber } = val;
+			console.log(val);
+			const url = `https://myserviceprojectapi.herokuapp.com/api/user/register`;
+
+			toggleLoad();
+			await axios
+				.post(url, {
+					name,
+					email,
+					password,
+					location,
+					phoneNumber,
+				})
+				.then((response) => {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Account Created Successfull",
+						showConfirmButton: false,
+						timer: 2500,
+					});
+					setLoading(false);
+					console.log(response);
+					dispach(user(response?.data?.data));
+					// hist("/");
+					window.location.reload(hist("/user-dashboard"));
+				})
+				.catch((error) => {
+					Swal.fire({
+						position: "center",
+						icon: "error",
+						title: "An error occurred",
+						showConfirmButton: false,
+						timer: 2500,
+					});
+					setLoading(false);
+				});
+		}
 	});
 
 	// const postData = async () => {
@@ -227,6 +235,7 @@ const UserRegister = () => {
 											required
 											type='text'
 											class='form-control'
+											placeholder='Enter your house address'
 										/>
 									</Autocomplete>
 								</div>

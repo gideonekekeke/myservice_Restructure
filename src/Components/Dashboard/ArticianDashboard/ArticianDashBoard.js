@@ -11,9 +11,11 @@ import { useSelector } from "react-redux";
 import CreateSteps from "./CreateSteps";
 import { useDispatch } from "react-redux";
 import { createStepID } from "../../Global/actions";
+import isOnline from "is-online";
 const ArticianDashBoard = () => {
 	const { current } = useContext(GlobalContext);
 	const dispatch = useDispatch();
+	console.log("check: ", navigator.onLine);
 	const [userData, setUserData] = React.useState([]);
 	const [load, setLoad] = React.useState(true);
 	const [showSteps, setShowSteps] = React.useState(false);
@@ -68,8 +70,19 @@ const ArticianDashBoard = () => {
 
 	React.useEffect(() => {
 		getData();
+
+		if (isOnline) {
+			axios.patch(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/detecting/${readUser._id}`,
+			);
+		} else {
+			axios.patch(
+				`https://myserviceprojectapi.herokuapp.com/api/artician/detecting/${readUser._id}/detectingOffline`,
+			);
+		}
+
 		gettingUser();
-	}, []);
+	}, [navigator.onLine]);
 	return (
 		<>
 			{showSteps ? <CreateSteps toggleSteps={toggleSteps} /> : null}
