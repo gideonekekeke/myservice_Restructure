@@ -74,9 +74,7 @@ const RateComps = ({ changeDetail }) => {
 
 	const fetchDetails = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${sendingTo}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${sendingTo}`)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -93,7 +91,7 @@ const RateComps = ({ changeDetail }) => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);
@@ -153,7 +151,7 @@ const RateComps = ({ changeDetail }) => {
 
 												axios
 													.post(
-														`https://myserviceprojectapi.herokuapp/api/rateuser/${data._id}/postrate`,
+														`https://myservicebe.onrender.com/api/rateuser/${data._id}/postrate`,
 														{
 															count: index,
 															userRated: current?._id,
@@ -171,7 +169,7 @@ const RateComps = ({ changeDetail }) => {
 													});
 
 												axios.patch(
-													`https://myserviceprojectapi.herokuapp/api/book/rateUpdate/${readID}
+													`https://myservicebe.onrender.com/api/book/rateUpdate/${readID}
                                                 `,
 													{
 														ratee: true,

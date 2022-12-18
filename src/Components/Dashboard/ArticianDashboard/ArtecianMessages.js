@@ -52,10 +52,10 @@ const ArtecianMessages = () => {
 		formState: { errors },
 	} = useForm({ resolver: yupResolver(yupSchema) });
 
-	const url = "https://myserviceprojectapi.herokuapp.com";
+	const url = "https://myservicebe.onrender.com";
 	const fetchDetails = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}`)
+			.get(`https://myservicebe.onrender.com/api/user/${current._id}`)
 			.then((response) => {
 				// console.log("get the user", response);
 				setData(response?.data?.data);
@@ -64,7 +64,7 @@ const ArtecianMessages = () => {
 	};
 	const fetchAllUsers = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user`)
+			.get(`https://myservicebe.onrender.com/api/user`)
 
 			.then((response) => {
 				// console.log("get the many", response);
@@ -83,10 +83,7 @@ const ArtecianMessages = () => {
 	const ChatMessage = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(
-				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
-				pastData,
-			)
+			.post(`https://myservicebe.onrender.com/${readData._id}/chat`, pastData)
 
 			.then((response) => {
 				if (response.status === 201) {
@@ -103,7 +100,7 @@ const ArtecianMessages = () => {
 		console.log(val);
 
 		await axios
-			.post(`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`, {
+			.post(`https://myservicebe.onrender.com/${readData._id}/chat`, {
 				message: message,
 				sendTo: readData2?._id,
 				sendingUser: "dge",
@@ -129,7 +126,7 @@ const ArtecianMessages = () => {
 		if (readData) {
 			await axios
 				.get(
-					`https://myserviceprojectapi.herokuapp.com/api/user/${readData._id}/friending`,
+					`https://myservicebe.onrender.com/api/user/${readData._id}/friending`,
 				)
 
 				.then((response) => {
@@ -148,7 +145,7 @@ const ArtecianMessages = () => {
 	};
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friends ooohhhhgfgfdhhjkj", response);

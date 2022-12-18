@@ -70,9 +70,7 @@ const BookingDetails = ({ changeDetail }) => {
 
 	const fetchDetails = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${sendingTo}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${sendingTo}`)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -90,7 +88,7 @@ const BookingDetails = ({ changeDetail }) => {
 	const AddingFriend = async () => {
 		const res = await axios
 			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
+				`https://myservicebe.onrender.com/api/user/${current._id}/friend`,
 				captureDetails,
 			)
 			.then((response) => {
@@ -116,7 +114,7 @@ const BookingDetails = ({ changeDetail }) => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);

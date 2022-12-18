@@ -7,7 +7,7 @@ const ProfilePage = ({ id }) => {
 
 	const gettingUser = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/artician/${id}`)
+			.get(`https://myservicebe.onrender.com/api/artician/${id}`)
 			.then((response) => {
 				console.log("main userdatahdfhdf", response.data.data);
 				setData(response.data.data);

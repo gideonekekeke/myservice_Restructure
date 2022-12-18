@@ -24,7 +24,7 @@ const ArticianDashBoard = () => {
 
 	const getData = async () => {
 		await axios
-			.get("https://myserviceprojectapi.herokuapp.com/api/book/bookings")
+			.get("https://myservicebe.onrender.com/api/book/bookings")
 			.then((response) => {
 				console.log(response?.data);
 				setUserData(response?.data);
@@ -34,9 +34,7 @@ const ArticianDashBoard = () => {
 
 	const gettingUser = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${readUser._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${readUser._id}`)
 			.then((response) => {
 				setLoad(false);
 				console.log("main userdatahdfhdf", response.data.data);
@@ -73,11 +71,11 @@ const ArticianDashBoard = () => {
 
 		if (isOnline) {
 			axios.patch(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/detecting/${readUser._id}`,
+				`https://myservicebe.onrender.com/api/artician/detecting/${readUser?._id}`,
 			);
 		} else {
 			axios.patch(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/detecting/${readUser._id}/detectingOffline`,
+				`https://myservicebe.onrender.com/api/artician/detecting/${readUser?._id}/detectingOffline`,
 			);
 		}
 
@@ -200,7 +198,7 @@ const ArticianDashBoard = () => {
 																									onClick={() => {
 																										axios
 																											.patch(
-																												`https://myserviceprojectapi.herokuapp.com/api/book/statusUpdate/${props._id}
+																												`https://myservicebe.onrender.com/api/book/statusUpdate/${props._id}
                                                 `,
 																												{
 																													status: true,
@@ -277,7 +275,7 @@ const ArticianDashBoard = () => {
 																											onClick={() => {
 																												axios
 																													.patch(
-																														`https://myserviceprojectapi.herokuapp.com/api/book/cancelUpdate/${props._id}
+																														`https://myservicebe.onrender.com/api/book/cancelUpdate/${props._id}
                                                 `,
 																														{
 																															cancel: true,

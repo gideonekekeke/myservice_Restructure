@@ -71,7 +71,7 @@ const UserRegister = () => {
 		} else {
 			const { name, email, password, phoneNumber } = val;
 			console.log(val);
-			const url = `https://myserviceprojectapi.herokuapp.com/api/user/register`;
+			const url = `https://myservicebe.onrender.com/api/user/register`;
 
 			toggleLoad();
 			await axios

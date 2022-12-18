@@ -38,10 +38,10 @@ const Messages = () => {
 		setMessage("");
 	};
 
-	const url = "https://myserviceprojectapi.herokuapp.com";
+	const url = "https://myservicebe.onrender.com";
 	const fetchDetails = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}`)
+			.get(`https://myservicebe.onrender.com/api/user/${current._id}`)
 			.then((response) => {
 				// console.log("see what am getting ohhddd", response);
 				setData(response?.data?.data);
@@ -50,7 +50,7 @@ const Messages = () => {
 	};
 	const fetchAllUsers = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user`)
+			.get(`https://myservicebe.onrender.com/api/user`)
 
 			.then((response) => {
 				// console.log("get the many", response);
@@ -74,10 +74,7 @@ const Messages = () => {
 	const ChatMessage = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(
-				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
-				pastData,
-			)
+			.post(`https://myservicebe.onrender.com/${readData._id}/chat`, pastData)
 
 			.then((response) => {
 				if (response.status === 201) {
@@ -92,10 +89,7 @@ const Messages = () => {
 	const ChatMessage2 = async (e) => {
 		// e.preventDefault();
 		await axios
-			.post(
-				`https://myserviceprojectapi.herokuapp.com/${readData._id}/chat`,
-				pastData2,
-			)
+			.post(`https://myservicebe.onrender.com/${readData._id}/chat`, pastData2)
 			.then((response) => {
 				if (response.status === 201) {
 					myFubc();
@@ -117,7 +111,7 @@ const Messages = () => {
 		if (readData) {
 			await axios
 				.get(
-					`https://myserviceprojectapi.herokuapp.com/api/user/${readData._id}/friending`,
+					`https://myservicebe.onrender.com/api/user/${readData._id}/friending`,
 				)
 
 				.then((response) => {
@@ -136,7 +130,7 @@ const Messages = () => {
 	};
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				// console.log("this are the friends oooojhbgvcvghjhgj", response?.data);

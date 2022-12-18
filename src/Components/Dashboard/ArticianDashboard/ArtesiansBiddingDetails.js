@@ -23,7 +23,7 @@ const ArtesiansBiddingDetails = () => {
 	const [loading, setLoading] = React.useState(false);
 	const gettingUser = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/job/${id}`)
+			.get(`https://myservicebe.onrender.com/api/job/${id}`)
 			.then((response) => {
 				// setLoad(false);
 				// console.log("main userdatahdfhdfgchf", response.data.data);
@@ -38,9 +38,7 @@ const ArtesiansBiddingDetails = () => {
 
 	const gettingUserArtesian = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${current._id}`)
 			.then((response) => {
 				setLoad(false);
 				// console.log("main userdatahdfhdf", response.data.data);
@@ -57,14 +55,11 @@ const ArtesiansBiddingDetails = () => {
 		} else {
 			toggleLoad();
 			await axios
-				.post(
-					`https://myserviceprojectapi.herokuapp.com/api/bid/create/${id}`,
-					{
-						userBid: current?._id,
-						description,
-						price,
-					},
-				)
+				.post(`https://myservicebe.onrender.com/api/bid/create/${id}`, {
+					userBid: current?._id,
+					description,
+					price,
+				})
 				.then(() => {
 					Swal.fire({
 						icon: "success",
@@ -77,7 +72,7 @@ const ArtesiansBiddingDetails = () => {
 
 			axios
 				.patch(
-					`https://myserviceprojectapi.herokuapp.com/api/artician/reducingbid/${current._id}`,
+					`https://myservicebe.onrender.com/api/artician/reducingbid/${current._id}`,
 				)
 				.then(() => {
 					console.log("correct");
@@ -87,7 +82,7 @@ const ArtesiansBiddingDetails = () => {
 
 	const getAllBid = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/bid`)
+			.get(`https://myservicebe.onrender.com/api/bid`)
 			.then((response) => {
 				setLoad(false);
 				// console.log("main bid", response.data.data);

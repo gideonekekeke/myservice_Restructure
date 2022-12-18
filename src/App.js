@@ -39,35 +39,19 @@ function App() {
 		<div>
 			<Router>
 				<Routes>
-					{!user ? (
-						<>
-							<Route path='/agents' element={<SelectAgent />} />
-							<Route path='/register-artecian' element={<RegisterArtecian />} />
-							<Route path='/signin-artecian' element={<SigninArtecian />} />
+					<Route path='/agents' element={<SelectAgent />} />
+					<Route path='/register-artecian' element={<RegisterArtecian />} />
+					<Route path='/signin-artecian' element={<SigninArtecian />} />
 
-							<Route path='/user-register' element={<UserRegister />} />
-							<Route path='/user-signin' element={<UsersSignin />} />
+					<Route path='/user-register' element={<UserRegister />} />
+					<Route path='/user-signin' element={<UsersSignin />} />
 
-							<Route path='/agent-login' element={<AgentSigin />} />
+					<Route path='/agent-login' element={<AgentSigin />} />
 
-							<Route
-								path='/api/artician/work/:id/:token'
-								element={<VerificationPage />}
-							/>
-						</>
-					) : (
-						<>
-							{" "}
-							<Route
-								path='/'
-								element={
-									<PrivateRoute>
-										<HomeScreen />
-									</PrivateRoute>
-								}
-							/>
-						</>
-					)}
+					<Route
+						path='/api/artician/work/:id/:token'
+						element={<VerificationPage />}
+					/>
 
 					<Route path='/user-dashboard' element={<UserHomeDash />} />
 					<Route path='/artician-dashboard' element={<ArticianDashBoard />} />
@@ -97,14 +81,7 @@ function App() {
 					<Route path='/view-more' element={<ViewMoreAtecians />} />
 					<Route path='/allmessage' element={<Messages />} />
 					<Route path='/artemessage' element={<ArtecianMessages />} />
-					<Route
-						path='/'
-						element={
-							<PrivateRoute>
-								<HomeScreen />
-							</PrivateRoute>
-						}
-					/>
+					<Route path='/' element={<PrivateRoute />} />
 				</Routes>
 			</Router>
 		</div>

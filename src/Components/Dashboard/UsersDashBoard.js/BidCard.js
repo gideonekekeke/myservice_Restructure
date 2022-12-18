@@ -21,7 +21,7 @@ const BidCard = () => {
 
 	const gettingUser = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}`)
+			.get(`https://myservicebe.onrender.com/api/user/${current._id}`)
 			.then((response) => {
 				// setLoad(false);
 				console.log("main userdatahdfhdfgchf", response.data.data);

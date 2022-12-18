@@ -61,7 +61,7 @@ const ViewMoreAtecians = () => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);
@@ -189,7 +189,7 @@ const ViewMoreAtecians = () => {
 																	onClick={() => {
 																		axios
 																			.post(
-																				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
+																				`https://myservicebe.onrender.com/api/user/${current._id}/friend`,
 																				{
 																					userName: props?.name,
 																					userImage: props?.avatar,
@@ -273,7 +273,7 @@ const ViewMoreAtecians = () => {
 																	toggleLoad();
 																	axios
 																		.post(
-																			`https://myserviceprojectapi.herokuapp.com/api/book/${current?._id}/booking`,
+																			`https://myservicebe.onrender.com/api/book/${current?._id}/booking`,
 																			{
 																				bookTitle: title,
 																				Desc: material,

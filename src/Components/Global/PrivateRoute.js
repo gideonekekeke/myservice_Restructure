@@ -5,28 +5,34 @@ import { Navigate } from "react-router-dom";
 import decoded from "jwt-decode";
 import UserHomeDash from "../Dashboard/UsersDashBoard.js/UserHomeDash";
 import HomeScreen from "../HomeScreen";
+import ArticianDashBoard from "../Dashboard/ArticianDashboard/ArticianDashBoard";
 
 const PrivateRoute = ({ children }) => {
 	const user = useSelector((state) => state?.persistedReducer?.current);
 
-	// if (user) {
-	// 	var token = user?.token;
-	// 	var decode = decoded(token);
-
-	// 	return <div>{decode?.verified ? children : <Register />}</div>;
-	// } else if (user === null) {
-	// 	return <Register />;
-	// }
-
 	if (user) {
-		return user.profession ? (
-			<Navigate to='/artician-dashboard' />
-		) : user.service ? (
-			<Navigate to='/user-dashboard' />
-		) : null;
+		return (
+			<div>
+				{user?.profession ? (
+					<ArticianDashBoard />
+				) : (
+					<>{user?.service ? <UserHomeDash /> : <HomeScreen />}</>
+				)}
+			</div>
+		);
+	} else {
+		return <HomeScreen />;
 	}
 
-	return <HomeScreen />;
+	// if (user) {
+	// 	return user?.profession ? (
+	// 		<ArticianDashBoard />
+	// 	) : user?.service ? (
+	// 		<UserHomeDash />
+	// 	) : null;
+	// }
+
+	// return <HomeScreen />;
 };
 
 export default PrivateRoute;

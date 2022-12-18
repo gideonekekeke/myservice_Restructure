@@ -57,7 +57,7 @@ const UserHomeDash = () => {
 
 	const getData = async () => {
 		await axios
-			.get("https://myserviceprojectapi.herokuapp.com/api/artician")
+			.get("https://myservicebe.onrender.com/api/artician")
 			.then((response) => {
 				console.log(response.data.data);
 				setData(response.data.data);
@@ -70,7 +70,7 @@ const UserHomeDash = () => {
 
 	const gettingUser = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/${readUser._id}`)
+			.get(`https://myservicebe.onrender.com/api/user/${readUser._id}`)
 			.then((response) => {
 				setLoad(false);
 				console.log("main userdatahdfhdf", response.data.data);
@@ -97,7 +97,7 @@ const UserHomeDash = () => {
 		try {
 			await axios
 				.get(
-					`https://myserviceprojectapi.herokuapp.com/api/artician/quering/query?search=${dataValue}`,
+					`https://myservicebe.onrender.com/api/artician/quering/query?search=${dataValue}`,
 				)
 				.then((result) => {
 					console.log("this is the datadfgyhjyt", result.data[0]);
@@ -499,7 +499,7 @@ const UserHomeDash = () => {
 																										onClick={() => {
 																											axios
 																												.patch(
-																													`https://myserviceprojectapi.herokuapp.com/api/book/cancelUpdate/${props._id}
+																													`https://myservicebe.onrender.com/api/book/cancelUpdate/${props._id}
                                                 `,
 																													{
 																														cancel: true,

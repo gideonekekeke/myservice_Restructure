@@ -22,9 +22,7 @@ const MyServicePage = () => {
 	};
 	const getUserData = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${current._id}`)
 			.then((response) => {
 				setData(response?.data?.data);
 				setLoad(false);
@@ -52,7 +50,7 @@ const MyServicePage = () => {
 		toggleLoad();
 		await axios
 			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/service/${current?._id}/create`,
+				`https://myservicebe.onrender.com/api/service/${current?._id}/create`,
 				{
 					title,
 					material,

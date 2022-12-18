@@ -49,8 +49,8 @@ const SigninArtecian = () => {
 	const onSubmit = handleSubmit(async (val) => {
 		const { email, password } = val;
 		console.log(val);
-		const localURL = "http://localhost:2331";
-		const url = `https://myserviceprojectapi.herokuapp.com/api/artician/login`;
+		const localURL = "https://myservicebe.onrender.com";
+		const url = `https://myservicebe.onrender.com/api/artician/login`;
 
 		toggleLoad();
 		await axios
@@ -73,7 +73,7 @@ const SigninArtecian = () => {
 					dispach(user(response?.data?.data));
 
 					setLoading(false);
-					window.location.reload();
+					// window.location.reload();
 					hist("/artician-dashboard");
 				} else {
 					Swal.fire({

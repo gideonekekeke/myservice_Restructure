@@ -5,10 +5,8 @@ import axios from "axios";
 // import Loading from "../LoadState";
 import swal from "sweetalert";
 import Autocomplete from "react-google-autocomplete";
-
 import { useParams } from "react-router-dom";
 import Loading from "./LoadState";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -48,7 +46,7 @@ const RegisterArtecian = () => {
 		const { name, email, password, address, phoneNumber } = val;
 		console.log(val);
 		const localURL = "http://localhost:5000";
-		const url = `http://localhost:5000/api/artician/register`;
+		const url = `https://myservicebe.onrender.com/api/artician/register`;
 
 		toggleLoad();
 		await axios

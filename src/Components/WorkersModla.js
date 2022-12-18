@@ -38,7 +38,7 @@ const WorkersModal = () => {
 		toggleLoad();
 		await axios
 			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/book/${current._id}/booking`,
+				`https://myservicebe.onrender.com/api/book/${current._id}/booking`,
 				{
 					bookTitle: `${showResult.produ[0].title}`,
 					Desc: `${showResult.produ[0].material}`,
@@ -73,9 +73,7 @@ const WorkersModal = () => {
 
 	const fetchDetails = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${showResult._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${showResult._id}`)
 
 			.then((response) => {
 				console.log("get userdrhdtr", response);
@@ -93,7 +91,7 @@ const WorkersModal = () => {
 	const AddingFriend = async () => {
 		const res = await axios
 			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/user/${current._id}/friend`,
+				`hhttps://myservicebe.onrender.com/api/user/${current._id}/friend`,
 				captureDetails,
 			)
 			.then((response) => {
@@ -119,7 +117,7 @@ const WorkersModal = () => {
 
 	const getAllFriends = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/user/friends/all`)
+			.get(`https://myservicebe.onrender.com/api/user/friends/all`)
 
 			.then((response) => {
 				console.log("this are the friendsztgc oooo", response?.data);

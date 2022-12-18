@@ -8,7 +8,7 @@ const VerificationPage = () => {
 	const { id, token } = useParams();
 
 	const onSubmit = async () => {
-		const main = "https://myserviceprojectapi.herokuapp.com";
+		const main = "https://myservicebe.onrender.com";
 		const online = "https://qlinkappi.herokuapp.com";
 
 		const url = `${main}/api/artician/work/${id}/${token}`;

@@ -46,7 +46,7 @@ const CreateSteps = ({ toggleSteps }) => {
 		toogleLoading();
 		await axios
 			.post(
-				`https://myserviceprojectapi.herokuapp.com/api/step/${stepData}/creatingstep`,
+				`https://myservicebe.onrender.com/api/step/${stepData}/creatingstep`,
 				{
 					steps,
 				},
@@ -66,9 +66,7 @@ const CreateSteps = ({ toggleSteps }) => {
 
 	const getBookings = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/book/singlebook/${stepData}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/book/singlebook/${stepData}`)
 			.then((res) => {
 				console.log(res.data);
 				setSingleData(res.data);
@@ -232,7 +230,7 @@ const CreateSteps = ({ toggleSteps }) => {
 												onClick={() => {
 													axios
 														.patch(
-															`https://myserviceprojectapi.herokuapp.com/api/step/${_id}/updatingDone
+															`https://myservicebe.onrender.com/api/step/${_id}/updatingDone
                                                 `,
 															{
 																done: true,

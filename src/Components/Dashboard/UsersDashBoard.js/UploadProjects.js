@@ -44,14 +44,17 @@ const UploadProjects = () => {
 		} else {
 			toogleLoading();
 			await axios
-				.post(`http://localhost:5000/api/job/create/${current._id}`, {
-					title,
-					description,
-					budget,
-					loading,
-					material,
-					skill,
-				})
+				.post(
+					`https://myservicebe.onrender.com/api/job/create/${current._id}`,
+					{
+						title,
+						description,
+						budget,
+						loading,
+						material,
+						skill,
+					},
+				)
 				.then((res) => {
 					Swal.fire({
 						icon: "success",

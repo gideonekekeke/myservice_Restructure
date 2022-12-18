@@ -16,9 +16,7 @@ const StepsTaken = ({ toggleSteps }) => {
 
 	const getBookings = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/book/singlebook/${stepData}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/book/singlebook/${stepData}`)
 			.then((res) => {
 				console.log(res.data);
 				setSingleData(res.data);

@@ -43,7 +43,7 @@ const UserProfile = () => {
 	const postData = async () => {
 		await axios
 			.patch(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/editprofile/${myId}`,
+				`https://myservicebe.onrender.com/api/artician/editprofile/${myId}`,
 				{
 					name,
 					email,
@@ -78,7 +78,7 @@ const UserProfile = () => {
 
 	const getUser = async () => {
 		const res = await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/artician/${myId}`)
+			.get(`https://myservicebe.onrender.com/api/artician/${myId}`)
 			.then((response) => {
 				console.log("hdjfkkdeuhjfjjf", response?.data?.data);
 				setData(response?.data?.data);
@@ -112,7 +112,7 @@ const UserProfile = () => {
 
 		await axios
 			.patch(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/editavatar/${myId}`,
+				`https://myservicebe.onrender.com/api/artician/editavatar/${myId}`,
 				formdata,
 				config,
 			)

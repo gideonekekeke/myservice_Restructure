@@ -21,7 +21,7 @@ const ArtesiansBidingCard = () => {
 	const [data, setData] = React.useState([]);
 	const gettingUser = async () => {
 		await axios
-			.get(`https://myserviceprojectapi.herokuapp.com/api/job`)
+			.get(`https://myservicebe.onrender.com/api/job`)
 			.then((response) => {
 				// setLoad(false);
 				console.log("main userdatahdfhdfgchf", response.data.data);
@@ -32,9 +32,7 @@ const ArtesiansBidingCard = () => {
 
 	const gettingUserData = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${current._id}`)
 			.then((response) => {
 				setLoad(false);
 				console.log("main userdatahdfhdf", response.data.data);

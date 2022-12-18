@@ -13,9 +13,7 @@ const ArtecianHeader = () => {
 	const [data, setData] = React.useState([]);
 	const fetchDetails = async () => {
 		await axios
-			.get(
-				`https://myserviceprojectapi.herokuapp.com/api/artician/${current._id}`,
-			)
+			.get(`https://myservicebe.onrender.com/api/artician/${current?._id}`)
 			.then((response) => {
 				// console.log("get the user", response);
 				setData(response?.data?.data);
@@ -61,7 +59,7 @@ const ArtecianHeader = () => {
 									style={{
 										objectFit: "cover",
 									}}
-									src={data.avatar}
+									src={data?.avatar}
 									alt='avatar'
 									class='thumb'
 								/>
@@ -94,7 +92,7 @@ const ArtecianHeader = () => {
 								style={{
 									objectFit: "cover",
 								}}
-								src={data.avatar}
+								src={data?.avatar}
 								alt='avatar'
 								class='thumb'
 							/>

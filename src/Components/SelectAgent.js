@@ -9,7 +9,7 @@ const SelectAgent = () => {
 
 	const getAgents = async () => {
 		await axios
-			.get("https://myserviceprojectapi.herokuapp.com/api/agent")
+			.get("https://myservicebe.onrender.com/api/agent")
 			.then((response) => {
 				console.log(response);
 				setData(response?.data?.data);
